@@ -20,6 +20,9 @@
           <li class="nav-item active">
             <router-link class="nav-link" to="/">HOME</router-link>
           </li>
+          <li class="nav-item active">
+            <router-link class="nav-link" to="/blog">BLOG</router-link>
+          </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/about">ABOUT</router-link>
           </li>
@@ -32,7 +35,7 @@
         </ul>
       </nav>
       <footer>
-        <p class="text-center"><span>© 2018 Snapdragon-XC - Front End Engineer</span></p>
+        <p class="text-center"><span>© 2021 Mark Mackenzie</span></p>
       </footer>
     </div>
   </div>
