@@ -3,11 +3,11 @@
     <h2 class="abstracts-title"><small>BLOG</small></h2>
     <br>
     <div id="bootstrap-overide-abstract" class="abstracts-abstract">
-      <h2></h2>
-      <h5>Posted on </h5>
+      <h2>{{abstract.title}}</h2>
+      <h5>Posted on {{abstract.day}} {{getDate}}</h5>
       <br>
       <!-- <div class="clamp" ng-bind-html="abstract.subtxt"></div> remove ellipsis -->
-      <div class="abstracts-subtxt"></div>
+      <div class="abstracts-subtxt" v-html="abstract.subtxt"></div>
       <br>
       <button class="btn btn-default">Read More</button>
       <br>
@@ -34,9 +34,26 @@
 
 <script>
 
+import Abstracts from '../dummy/Abstracts';
+import MonthsFullNameService from '../services/MonthsFullNameService';
+
 export default {
   name: 'Abstract',
-  components: {}
+  components: {},
+  data: function () {
+    return {
+      abstract: Abstracts[1],
+    }
+  },
+  computed: {
+    // a computed getter
+    getDate: function() {
+      const x = this.abstract.filter;
+      const mo = '' + /[a-zA-Z]+/.exec(x);
+      const yr = '' + /^[0-9]+/.exec(x);
+      return MonthsFullNameService[mo] + ' ' + yr;
+    }
+  }
 }
 </script>
 
