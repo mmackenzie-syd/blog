@@ -1,4 +1,4 @@
-const Abstracts = [
+const abstracts = [
     {
         title: 'Details of the Object Model',
         filter: '2017/Jan',  // contains month and year
@@ -50,4 +50,4 @@ const Abstracts = [
     }
 ];
 
-export default Abstracts;
+module.exports = { abstracts };

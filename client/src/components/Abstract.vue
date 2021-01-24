@@ -34,16 +34,14 @@
 
 <script>
 
-import Abstracts from '../dummy/Abstracts';
 import MonthsFullNameService from '../services/MonthsFullNameService';
 
 export default {
   name: 'Abstract',
   components: {},
+  props: ['abstract'],
   data: function () {
-    return {
-      abstract: Abstracts[1],
-    }
+    return {}
   },
   computed: {
     // a computed getter

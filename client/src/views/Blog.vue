@@ -52,9 +52,23 @@
 
 <script>
 
+import Axios from 'axios';
+
 export default {
   name: 'Blog',
-  components: {}
+  components: {},
+  mounted () {
+    Axios
+        .get('http://localhost:3000/abstracts')
+        .then(response => {
+          console.log('rr', response)
+        })
+        .catch(error => {
+          console.log(error)
+         // this.errored = true
+        })
+      //  .finally(() => this.loading = false)
+  }
 }
 </script>
 
