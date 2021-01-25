@@ -65,22 +65,19 @@ export default {
       }
     },
     onPrev: function() {
-      const page = Number(this.$route.params.page);
-      const prevPage = page - 1;
+      const prevPage = Number(this.$route.params.page) - 1;
       if (prevPage > 0 ){
         this.$router.push({ path: `/blog/abstract/${prevPage}` });
       }
     },
     onNext: function() {
-      const page = Number(this.$route.params.page);
-      const nextPage = page + 1;
+      const nextPage = Number(this.$route.params.page) + 1;
       if (nextPage < this.pages + 1){
         this.$router.push({ path: `/blog/abstract/${nextPage}` });
       }
     }
   },
   mounted() {
-    console.log('state', this.loading, this.abstracts)
     this.getAbstract();
   },
   watch: {
