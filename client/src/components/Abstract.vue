@@ -2,11 +2,11 @@
   <div class="abstracts">
     <h2 class="abstracts-title"><small>BLOG</small></h2>
     <br>
-    <div id="bootstrap-overide-abstract" class="abstracts-abstract">
+    <div v-if="loading">Loading...</div>
+    <div v-else id="bootstrap-overide-abstract" class="abstracts-abstract">
       <h2>{{abstract.title}}</h2>
       <h5>Posted on {{abstract.day}} {{getDate}}</h5>
       <br>
-      <!-- <div class="clamp" ng-bind-html="abstract.subtxt"></div> remove ellipsis -->
       <div class="abstracts-subtxt" v-html="abstract.subtxt"></div>
       <br>
       <button class="btn btn-default">Read More</button>
@@ -15,15 +15,15 @@
     </div>
     <div class="row abstracts-pagination">
       <div class="btn-toolbar col-md-6">
-        <button type="button" class="btn btn-default">
+        <button type="button" class="btn btn-default" v-on:click="onPrev">
           &lt;
         </button>
 
         <button type="button" class="btn btn-default">
-          1
+          {{$route.params.page}}
         </button>
 
-        <button type="button" class="btn btn-default">
+        <button type="button" class="btn btn-default" v-on:click="onNext">
           &gt;
         </button>
       </div>
@@ -33,23 +33,62 @@
 </template>
 
 <script>
-
+import { mapState } from 'vuex';
 import MonthsFullNameService from '../services/MonthsFullNameService';
 
 export default {
   name: 'Abstract',
   components: {},
-  props: ['abstract'],
   data: function () {
-    return {}
+    return {
+      abstract: null,
+      loading: true,
+      pages: 0
+    }
   },
   computed: {
-    // a computed getter
+    ...mapState('abstract', ['abstracts']),
     getDate: function() {
       const x = this.abstract.filter;
       const mo = '' + /[a-zA-Z]+/.exec(x);
       const yr = '' + /^[0-9]+/.exec(x);
       return MonthsFullNameService[mo] + ' ' + yr;
+    }
+  },
+  methods: {
+    getAbstract: function() {
+      if (this.abstracts) {
+        this.pages = this.abstracts.length;
+        const index = Number(this.$route.params.page) - 1;
+        this.abstract = this.abstracts[index];
+        this.loading = false;
+      }
+    },
+    onPrev: function() {
+      const page = Number(this.$route.params.page);
+      const prevPage = page - 1;
+      if (prevPage > 0 ){
+        this.$router.push({ path: `/blog/abstract/${prevPage}` });
+      }
+    },
+    onNext: function() {
+      const page = Number(this.$route.params.page);
+      const nextPage = page + 1;
+      if (nextPage < this.pages + 1){
+        this.$router.push({ path: `/blog/abstract/${nextPage}` });
+      }
+    }
+  },
+  mounted() {
+    console.log('state', this.loading, this.abstracts)
+    this.getAbstract();
+  },
+  watch: {
+    abstracts() {
+      this.getAbstract();
+    },
+    $route() {
+      this.getAbstract();
     }
   }
 }

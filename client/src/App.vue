@@ -21,7 +21,7 @@
             <router-link class="nav-link" to="/">HOME</router-link>
           </li>
           <li class="nav-item active">
-            <router-link class="nav-link" to="/blog">BLOG</router-link>
+            <router-link class="nav-link" to="/blog/abstract/1">BLOG</router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/about">ABOUT</router-link>
@@ -40,6 +40,25 @@
     </div>
   </div>
 </template>
+
+<script>
+// @ is an alias to /src
+import { mapActions, mapGetters } from 'vuex';
+
+export default {
+  name: 'App',
+  computed: {
+    ...mapGetters('abstract', ['abstracts'])
+  },
+  methods: {
+    ...mapActions('abstract', ['getAbstracts'])
+  },
+  mounted() {
+    this.getAbstracts();
+  }
+}
+
+</script>
 
 <style>
 

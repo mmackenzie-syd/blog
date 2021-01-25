@@ -41,7 +41,7 @@ const routes = [
         component: Article
       },
       {
-        path: 'abstract',
+        path: 'abstract/:page',
         component: Abstract
       }
     ]
