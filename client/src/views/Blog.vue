@@ -139,16 +139,17 @@ export default {
   .nav-pills > li > a:focus {
     background-color: #fff;
   }
+
   /* STYLE CURRENTLY ACTIVE LINK */
-  .nav-pills > li.active > a {
+  .nav-pills > li > a.router-link-exact-active {
     color: #111;
     background-color: #fff;
   }
-  .nav-pills > li.active > a:hover {
+  .nav-pills > li > a.router-link-exact-active:hover {
     background-color: #eee;
     color: #111;
   }
-  .nav-pills > li.active > a:focus {
+  .nav-pills > li > a.router-link-exact-active:focus {
     color: #111;
     background-color: #fff;
   }

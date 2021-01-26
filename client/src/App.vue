@@ -17,10 +17,10 @@
     <div id="menu" class="site-footer">
       <nav class="navbar navbar-inverse">
         <ul class="nav navbar-nav">
-          <li class="nav-item active">
+          <li class="nav-item">
             <router-link class="nav-link" to="/">HOME</router-link>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item">
             <router-link class="nav-link" to="/blog/posts/all/abstract/1">BLOG</router-link>
           </li>
           <li class="nav-item">
