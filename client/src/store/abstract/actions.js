@@ -14,4 +14,23 @@ export function getAbstracts({ commit }) {
 }
 
 
+const applyFilter = function(x, filter) {
+        if(filter == 'posts/all'){
+            return x;
+        } else {
+            return x.filter(function(abstract) {
+                return abstract.filter === filter;
+            });
+        }
+    };
+
+export function filterAbstracts({ state, commit }, filter) {
+    const { abstracts } = state;
+    if (filter && abstracts) {
+        const parsed = applyFilter(abstracts, filter);
+        commit('setFilteredAbstracts', parsed);
+    }
+}
+
+
 

@@ -1,8 +1,42 @@
-export function setAbstracts(state, val) {
-    state.abstracts = val;
+
+const populateCategories = function (abstracts) {
+    // a category is {filter: , number: }
+    const years = ['2018', '2017', '2016', '2015'];
+    const months = ["Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb", "Jan"];
+    const categories = [];
+    categories.push({ filter: 'posts/all', number: abstracts.length});
+
+    years.forEach( function(year){
+        const filteredByYear = abstracts.filter( function(abstract){
+            const filterYear = '' +  /^[0-9]+/.exec(abstract.filter) ;
+            return ( year === filterYear )
+        });
+        if(filteredByYear.length !== 0){
+            months.forEach( function(month) {
+                const lowerCaseMonth = month.toLowerCase();
+                const filteredByMonth = filteredByYear.filter(function(abstract){
+                    const filterMonth =  '' + /[a-zA-Z]+/.exec(abstract.filter);
+                    return ( lowerCaseMonth === filterMonth )
+                })
+                if(filteredByMonth.length !== 0){
+                    categories.push({
+                        filter: year + '/' + lowerCaseMonth,
+                        number: filteredByMonth.length
+                    });
+                }
+            });
+        }
+    });
+    return categories;
 }
 
-export function setLoading(state, val) {
-    state.loading = val;
+export function setAbstracts(state, abstracts) {
+    state.abstracts = abstracts;
+    state.categories = populateCategories(abstracts);
 }
+
+export function setFilteredAbstracts(state, filteredAbstracts) {
+    state.filteredAbstracts = filteredAbstracts;
+}
+
 

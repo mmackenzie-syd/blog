@@ -32,12 +32,12 @@ const routes = [
     component: () => import('../views/Login.vue')
   },
   {
-    path: '/blog',
+    path: '/blog/:month/:year',
     name: 'Blog',
     component: Blog,
     children: [
       {
-        path: 'article',
+        path: 'article/:page',
         component: Article
       },
       {

@@ -1,7 +1,7 @@
 const abstracts = [
     {
         title: 'Details of the Object Model',
-        filter: '2017/Jan',  // contains month and year
+        filter: '2017/jan',  // contains month and year
         day: '15',
         sortIdx: 37, // index for sorting abstracts into chronological order. It is defined as the number of months since 2014.
         subtxt: `<p>JavaScript is an object-based language based on prototypes, rather than being class-based. 
@@ -12,7 +12,7 @@ const abstracts = [
     },
     {
         title: 'Values, Variables, and Literals',
-        filter: '2017/Jan',  // contains month and year
+        filter: '2017/jan',  // contains month and year
         day: '20',
         sortIdx: 37, // index for sorting abstracts into chronological order. It is defined as the number of months since 2014.
         subtxt: `<p>This post discusses values that JavaScript recognizes and describes the fundamental building blocks of JavaScript expressions: variables and literals.</p>
@@ -27,7 +27,7 @@ const abstracts = [
     },
     {
         title: 'Conditional Statements',
-        filter: '2016/Jun',  // contains month and year
+        filter: '2016/jun',  // contains month and year
         day: '8',
         sortIdx: 30, // index for sorting abstracts into chronological order. It is defined as the number of months since 2014.
         subtxt: `<p>JavaScript supports a compact set of statements that you can use to incorporate a great deal of interactivity 
@@ -38,7 +38,7 @@ const abstracts = [
     },
     {
         title: 'Loop Statements',
-        filter: '2015/Mar',  // contains month and year
+        filter: '2015/mar',  // contains month and year
         day: '3',
         sortIdx: 15, // index for sorting abstracts into chronological order. It is defined as the number of months since 2014.
         subtxt: `<p>JavaScript supports a compact set of statements that you can use to incorporate a great deal of interactivity 

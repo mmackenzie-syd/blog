@@ -1,5 +1,7 @@
 export default function() {
     return {
-        abstracts: null
+        abstracts: null,
+        categories: [],
+        filteredAbstracts: null,
     }
 }

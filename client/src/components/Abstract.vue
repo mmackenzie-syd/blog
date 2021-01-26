@@ -2,7 +2,7 @@
   <div class="abstracts">
     <h2 class="abstracts-title"><small>BLOG</small></h2>
     <br>
-    <div v-if="loading">Loading...</div>
+   <div v-if="loading">Loading...</div>
     <div v-else id="bootstrap-overide-abstract" class="abstracts-abstract">
       <h2>{{abstract.title}}</h2>
       <h5>Posted on {{abstract.day}} {{getDate}}</h5>
@@ -33,12 +33,14 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import MonthsFullNameService from '../services/MonthsFullNameService';
 
-export default {
+import MonthsFullNameService from '../services/MonthsFullNameService';
+import {mapState} from "vuex";
+
+ export default {
   name: 'Abstract',
   components: {},
+  props: ['category', 'index'],
   data: function () {
     return {
       abstract: null,
@@ -47,7 +49,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('abstract', ['abstracts']),
+    ...mapState('abstract', ['filteredAbstracts']),
     getDate: function() {
       const x = this.abstract.filter;
       const mo = '' + /[a-zA-Z]+/.exec(x);
@@ -57,23 +59,28 @@ export default {
   },
   methods: {
     getAbstract: function() {
-      if (this.abstracts) {
-        this.pages = this.abstracts.length;
+      if (this.filteredAbstracts) {
+        this.pages = this.filteredAbstracts.length;
         const index = Number(this.$route.params.page) - 1;
-        this.abstract = this.abstracts[index];
+        this.abstract = this.filteredAbstracts[index];
         this.loading = false;
       }
     },
+    extractFilterfromRoute: function() {
+      return this.$route.params.month + '/' + this.$route.params.year;
+    },
     onPrev: function() {
       const prevPage = Number(this.$route.params.page) - 1;
+      const filter = this.extractFilterfromRoute();
       if (prevPage > 0 ){
-        this.$router.push({ path: `/blog/abstract/${prevPage}` });
+        this.$router.push({ path: `/blog/${filter}/abstract/${prevPage}` });
       }
     },
     onNext: function() {
       const nextPage = Number(this.$route.params.page) + 1;
+      const filter = this.extractFilterfromRoute();
       if (nextPage < this.pages + 1){
-        this.$router.push({ path: `/blog/abstract/${nextPage}` });
+        this.$router.push({ path: `/blog/${filter}/abstract/${nextPage}` });
       }
     }
   },
@@ -81,12 +88,12 @@ export default {
     this.getAbstract();
   },
   watch: {
-    abstracts() {
-      this.getAbstract();
-    },
-    $route() {
+    filteredAbstracts() {
       this.getAbstract();
     }
+    // $route() {
+    //   this.getAbstract();
+    // }
   }
 }
 </script>
