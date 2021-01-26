@@ -90,10 +90,10 @@ import {mapState} from "vuex";
   watch: {
     filteredAbstracts() {
       this.getAbstract();
+    },
+    $route() {
+      this.getAbstract();
     }
-    // $route() {
-    //   this.getAbstract();
-    // }
   }
 }
 </script>
