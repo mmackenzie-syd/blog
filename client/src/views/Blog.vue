@@ -41,7 +41,7 @@
           <h4 @click="openArchives" v-show="!archiveHide" class="openArchives"><i class="fa fa-chevron-circle-up"></i></h4>
         </div>
         <ul class="nav nav-pills nav-stacked">
-          <li v-for="category in categories" :key="category.filter">
+          <li v-for="category in categories" :key="category.filter" :class="[currentPath.includes(category.filter) ? 'active' : '']">
             <router-link class="nav-link" :to="`/blog/${category.filter}/abstract/1`" >
               {{ extractMonth(category.filter) }}
               {{ extractYear(category.filter) }}
@@ -62,7 +62,8 @@ export default {
   data () {
     return {
       archiveHide: false,
-      archiveHeight: { maxHeight: '210px' }
+      archiveHeight: { maxHeight: '210px' },
+      currentPath: '',
     }
   },
   computed: {
@@ -99,6 +100,7 @@ export default {
   },
   mounted () {
     this.applyFilter();
+    this.currentPath = this.$route.path;
   },
   watch: {
     abstracts() {
@@ -106,6 +108,7 @@ export default {
     },
     $route() {
       this.applyFilter();
+      this.currentPath = this.$route.path;
     }
   }
 }
@@ -141,15 +144,15 @@ export default {
   }
 
   /* STYLE CURRENTLY ACTIVE LINK */
-  .nav-pills > li > a.router-link-exact-active {
+  .nav-pills > li.active > a {
     color: #111;
     background-color: #fff;
   }
-  .nav-pills > li > a.router-link-exact-active:hover {
+  .nav-pills > li.active > a:hover {
     background-color: #eee;
     color: #111;
   }
-  .nav-pills > li > a.router-link-exact-active:focus {
+  .nav-pills > li.active > a:focus {
     color: #111;
     background-color: #fff;
   }

@@ -17,10 +17,10 @@
     <div id="menu" class="site-footer">
       <nav class="navbar navbar-inverse">
         <ul class="nav navbar-nav">
-          <li class="nav-item">
+          <li class="nav-item" :class="[(currentPath === '/') ? 'active' : '']">
             <router-link class="nav-link" to="/">HOME</router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" :class="[currentPath.includes('/blog') ? 'active' : '']">
             <router-link class="nav-link" to="/blog/posts/all/abstract/1">BLOG</router-link>
           </li>
           <li class="nav-item">
@@ -47,13 +47,24 @@ import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
+  data () {
+    return {
+      currentPath: '/',
+    }
+  },
   computed: {
   },
   methods: {
     ...mapActions('abstract', ['getAbstracts'])
   },
   mounted() {
+    this.currentPath = this.$route.path;
     this.getAbstracts();
+  },
+  watch: {
+    $route() {
+      this.currentPath = this.$route.path;
+    }
   }
 }
 
