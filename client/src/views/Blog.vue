@@ -26,7 +26,7 @@
           <h4 @click="openPosts" v-show="!postsHide" class="openPosts"><i class="fa fa-chevron-circle-up"></i></h4>
         </div>
         <ul class="nav nav-pills nav-stacked">
-          <li v-for="abstract in filteredAbstracts" :key="abstract.title">
+          <li v-for="(abstract, index) in filteredAbstracts" :key="abstract.title" :class="[currentPath.includes(index + 1) ? 'active' : '']">
             <a>
               {{ abstract.title }}
             </a>

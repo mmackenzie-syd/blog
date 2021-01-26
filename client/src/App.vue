@@ -32,6 +32,9 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/login">LOGIN</router-link>
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/admin/list/1">ADMIN</router-link>
+          </li>
         </ul>
       </nav>
       <footer>

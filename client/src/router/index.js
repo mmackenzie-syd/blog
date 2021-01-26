@@ -1,9 +1,12 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Blog from '../views/Blog.vue'
-import Article from '../components/Article.vue'
-import Abstract from '../components/Abstract.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Home from '../views/Home.vue';
+import Blog from '../views/Blog.vue';
+import Admin from '../views/Admin.vue';
+import Article from '../components/Article.vue';
+import Abstract from '../components/Abstract.vue';
+import AddBlog from '../components/AddBlog.vue';
+import ListBlog from '../components/ListBlog.vue';
 
 Vue.use(VueRouter)
 
@@ -46,6 +49,21 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin,
+    children: [
+      {
+        path: 'list/:page',
+        component: ListBlog
+      },
+      {
+        path: 'add',
+        component: AddBlog
+      }
+    ]
+  }
 ]
 
 const router = new VueRouter({
