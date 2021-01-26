@@ -26,7 +26,6 @@
           <h4 @click="openPosts" v-show="!postsHide" class="openPosts"><i class="fa fa-chevron-circle-up"></i></h4>
         </div>
         <ul class="nav nav-pills nav-stacked">
-        <!--  <li ng-repeat="abstract in $ctrl.pages.filteredAbstracts" ng-class="{active:$ctrl.isActive($index)}"> -->
           <li v-for="abstract in filteredAbstracts" :key="abstract.title">
             <a>
               {{ abstract.title }}
