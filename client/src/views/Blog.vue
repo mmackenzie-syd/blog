@@ -17,20 +17,24 @@
         </div>
       </form>
       <br>
-      <div class="blog-recent-posts">
+      <div class="blog-recent-posts" v-bind:style="postsHeight">
         <div class="posts">
-          <h4 style="text-transform: capitalize;"> </h4>
-          <h4 class="openPosts"><i class="fa fa-chevron-circle-down"></i></h4>
-          <h4 class="openPosts"><i class="fa fa-chevron-circle-up"></i></h4>
+          <h4 style="text-transform: capitalize;">
+            {{ extractMonth(filter) }} {{ extractYear(filter) }}
+          </h4>
+          <h4 @click="openPosts" v-show="postsHide" class="openPosts"><i class="fa fa-chevron-circle-down"></i></h4>
+          <h4 @click="openPosts" v-show="!postsHide" class="openPosts"><i class="fa fa-chevron-circle-up"></i></h4>
         </div>
         <ul class="nav nav-pills nav-stacked">
-          <li>
+        <!--  <li ng-repeat="abstract in $ctrl.pages.filteredAbstracts" ng-class="{active:$ctrl.isActive($index)}"> -->
+          <li v-for="abstract in filteredAbstracts" :key="abstract.title">
             <a>
-
+              {{ abstract.title }}
             </a>
           </li>
         </ul>
       </div>
+
       <div class="blog-aside-divider">
         <hr/>
       </div>
@@ -63,7 +67,10 @@ export default {
     return {
       archiveHide: false,
       archiveHeight: { maxHeight: '210px' },
+      postsHide: false,
+      postsHeight: { maxHeight: '210px' },
       currentPath: '',
+      filter: ''
     }
   },
   computed: {
@@ -84,8 +91,18 @@ export default {
     },
     applyFilter: function() {
       const { month, year } = this.$route.params;
-      const filter = month + '/' + year;
-      this.filterAbstracts(filter);
+      this.filter = month + '/' + year;
+      this.filterAbstracts(this.filter);
+    },
+    // For open close posts
+    openPosts: function(){
+      if(this.postsHide){
+        this.postsHide = false;
+        this.postsHeight = { maxHeight: '210px' } ;
+      } else {
+        this.postsHide = true;
+        this.postsHeight = { maxHeight: '1000px' };
+      }
     },
     // For open close archives
     openArchives: function(){
