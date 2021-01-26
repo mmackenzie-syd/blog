@@ -6,6 +6,7 @@ import Admin from '../views/Admin.vue';
 import Article from '../components/Article.vue';
 import Abstract from '../components/Abstract.vue';
 import AddBlog from '../components/AddBlog.vue';
+import EditBlog from '../components/EditBlog.vue';
 import ListBlog from '../components/ListBlog.vue';
 
 Vue.use(VueRouter)
@@ -61,6 +62,10 @@ const routes = [
       {
         path: 'add',
         component: AddBlog
+      },
+      {
+        path: 'edit/:id',
+        component: EditBlog
       }
     ]
   }
