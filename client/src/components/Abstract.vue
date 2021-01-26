@@ -2,7 +2,7 @@
   <div class="abstracts">
     <h2 class="abstracts-title"><small>BLOG</small></h2>
     <br>
-   <div v-if="loading">Loading...</div>
+    <div v-if="loading">Loading...</div>
     <div v-else id="bootstrap-overide-abstract" class="abstracts-abstract">
       <h2>{{abstract.title}}</h2>
       <h5>Posted on {{abstract.day}} {{getDate}}</h5>
@@ -34,8 +34,8 @@
 
 <script>
 
-import MonthsFullNameService from '../services/MonthsFullNameService';
-import {mapState} from "vuex";
+  import MonthsFullNameService from '../services/MonthsFullNameService';
+  import {mapState} from "vuex";
 
  export default {
   name: 'Abstract',

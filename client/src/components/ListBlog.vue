@@ -3,7 +3,7 @@
     <div class="list">
       <div class="row">
         <div class="col-md-6">
-          <h2 style="margin-top: 0px; line-height: 1"><small>ADMIN</small></h2>
+          <h2 class="admin-title" ><small>ADMIN</small></h2>
         </div>
         <div class="btn-toolbar col-md-6">
           <button class='btn btn-default pull-right' v-on:click="addBlog">Add Blog</button>
@@ -31,8 +31,18 @@
                     two conditional statements: if...else and switch.</p>`</div>
               </td>
               <td class="list-table-filter"><div>jun/2017</div></td>
-              <td class="list-table-edit"><div><a>Edit</a></div></td>
-              <td class="list-table-delete"><div><a href="#">Delete</a></div></td>
+              <td class="list-table-edit">
+                <div>
+                  <router-link class="nav-link" :to="`/admin/edit/1`">
+                    Edit
+                  </router-link>
+                </div>
+              </td>
+              <td class="list-table-delete">
+                <div>
+                  <a href="#">Delete</a>
+                </div>
+              </td>
             </tr>
      <!--     <tr ng-repeat="abstract in $ctrl.abstracts | startFrom:($ctrl.currentPage -1) * $ctrl.pageSize | limitTo:$ctrl.pageSize">
             <td class="list-table-title" ><div>{{abstract.title}}</div></td>
@@ -68,13 +78,17 @@ export default {
   components: {},
   methods: {
     addBlog: function() {
-        this.$router.push({ path: `/admin/add` });
+        this.$router.push({ path: `/admin/edit` });
     },
-  }
+  },
 }
 </script>
 
 <style>
+  .admin-title {
+    margin-top: 0;
+    line-height: 1;
+  }
   table {
     table-layout: fixed;
     margin-bottom: 20px;

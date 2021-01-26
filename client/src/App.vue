@@ -2,7 +2,9 @@
   <div class="container">
     <!-- SITE HEADER -->
     <div class="site-header">
-      <h1>FRONT END ENGINEER</h1>
+      <router-link to="/" class="site-header-brand">
+        <h1>FRONT END ENGINEER</h1>
+      </router-link>
       <h2><small>Javascript - Angular - React - Vue</small></h2>
     </div>
     <div class="row">
@@ -32,7 +34,7 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/login">LOGIN</router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" :class="[currentPath.includes('/admin') ? 'active' : '']">
             <router-link class="nav-link" to="/admin/list/1">ADMIN</router-link>
           </li>
         </ul>
@@ -100,6 +102,20 @@ export default {
   .site-header h1:hover {
     cursor: pointer;
   }
+
+
+   a.site-header-brand {
+    color: #333;
+    text-decoration: none;
+  }
+  a.site-header-brand:hover {
+    color: #595959;
+    text-decoration: none;
+  }
+  a.site-header-brand:focus {
+    color: #333;
+  }
+
   .site-header-h2 {
     font-size: 30px;
     margin-top: 0;

@@ -5,7 +5,6 @@ import Blog from '../views/Blog.vue';
 import Admin from '../views/Admin.vue';
 import Article from '../components/Article.vue';
 import Abstract from '../components/Abstract.vue';
-import AddBlog from '../components/AddBlog.vue';
 import EditBlog from '../components/EditBlog.vue';
 import ListBlog from '../components/ListBlog.vue';
 
@@ -60,11 +59,11 @@ const routes = [
         component: ListBlog
       },
       {
-        path: 'add',
-        component: AddBlog
+        path: 'edit/:id',
+        component: EditBlog
       },
       {
-        path: 'edit/:id',
+        path: 'edit',
         component: EditBlog
       }
     ]

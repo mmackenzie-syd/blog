@@ -26,7 +26,7 @@
           <h4 @click="openPosts" v-show="!postsHide" class="openPosts"><i class="fa fa-chevron-circle-up"></i></h4>
         </div>
         <ul class="nav nav-pills nav-stacked">
-          <li v-for="(abstract, index) in filteredAbstracts" :key="abstract.title" :class="[currentPath.includes(index + 1) ? 'active' : '']">
+          <li v-for="(abstract, index) in filteredAbstracts" :key="abstract.title" :class="[(currentPage === (index + 1)) ? 'active' : '']">
             <a>
               {{ abstract.title }}
             </a>
@@ -69,6 +69,7 @@ export default {
       postsHide: false,
       postsHeight: { maxHeight: '210px' },
       currentPath: '',
+      currentPage: '',
       filter: ''
     }
   },
@@ -117,6 +118,7 @@ export default {
   mounted () {
     this.applyFilter();
     this.currentPath = this.$route.path;
+    this.currentPage = Number(this.$route.params.page);
   },
   watch: {
     abstracts() {
@@ -125,6 +127,7 @@ export default {
     $route() {
       this.applyFilter();
       this.currentPath = this.$route.path;
+      this.currentPage = Number(this.$route.params.page);
     }
   }
 }
