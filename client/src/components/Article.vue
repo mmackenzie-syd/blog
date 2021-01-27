@@ -1,19 +1,17 @@
 <template>
-  <div class="article">
+  <div class="article" ref="article">
     <h2 class="article-title">
       <small><a href="#" v-on:click="goBack"><span class="glyphicon glyphicon-menu-left" style="top: 3px"></span> Go Back</a></small>
     </h2>
     <br>
     <div v-if="loading">Loading...</div>
-    <div v-else class="article-abstract" id="bootstrap-overide-article" v-bind:style="articleHeight">
+    <div v-else class="article-abstract" id="article">
       <h2>{{article.title}}</h2>
       <h5>Posted on {{ abstract.day }} {{getDate}}</h5>
       <br>
-     <!-- <div ng-bind-html="$ctrl.highlight($ctrl.abstract.subtxt)"></div> -->
       <div v-html="highlight(abstract.subtxt)"></div>
       <hr style="border-top: 1px solid #ddd;">
-      <!-- use ng-bind-html & $sanitize to display html -->
-    <!--  <div ng-bind-html="$ctrl.highlight($ctrl.article.fulltxt)" ></div> -->
+      <div v-html="highlight(article.fulltxt)"></div>
       <br>
     </div>
     <br>
@@ -34,7 +32,6 @@
       return {
         abstract: null,
         loading: true,
-        articleHeight: {},
       }
     },
     computed: {
@@ -55,7 +52,8 @@
         }
       },
       goBack: function() {
-        this.$router.go(-1)
+        this.$router.go(-1);
+        this.reSet();
       },
       highlight: function(txt){
         if(txt === undefined)
@@ -74,24 +72,47 @@
           return '<div class="color-code"><pre>'  +  html + '</pre></div>';
         });
         return txt;
+      },
+      animateArticle: function() {
+        setTimeout(() => {
+          const menu = document.getElementById("menu");
+          const article = document.getElementById("article");
+          menu.style.position="relative";
+          menu.style.top="0";
+          article.style.transition="max-height 3s";
+          article.style.maxHeight="10000px";
+        },100)
+      },
+      reSet: function() {
+        const menu = document.getElementById("menu");
+        menu.style.position="absolute";
+        menu.style.top="770px";
+        document.getElementById("article").style.maxHeight="100px";
       }
     },
     mounted() {
       const id = this.$route.params.id;
       this.getArticle(id);
       this.getAbstract(id);
-      this.articleHeight = { maxHeight: '10000px' };
     },
     watch: {
       article() {
-        this.loading = false;
+        if (this.abstracts) {
+          this.loading = false;
+        }
       },
       abstracts() {
         const id = this.$route.params.id;
-        this.getAbstract(id)
+        this.getAbstract(id);
+        this.loading = false;
+      },
+      loading() {
+        this.animateArticle();
       }
     }
   }
+
+
 </script>
 
 <style>

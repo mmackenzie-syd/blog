@@ -45,7 +45,8 @@ const abstracts = [
                  in Web pages. This post provides an overview of the Loop statements.</p>
                  <p>A loop is a set of commands that executes repeatedly until a specified condition is met. JavaScript supports 
                  the for, do while, while, and label loop statements (label is not itself a looping statement, but is frequently 
-                 used with these statements). In addition, you can use the break and continue statements within loop statements.</p>`,
+                 used with these statements). In addition, you can use the break and continue statements within loop statements.</p>
+                 <p>Another statement, for...in, executes statements repeatedly but is used for object manipulation. </p>`,
         articleId: '4'
     }
 ];

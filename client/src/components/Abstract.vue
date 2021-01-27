@@ -3,7 +3,7 @@
     <h2 class="abstracts-title"><small>BLOG</small></h2>
     <br>
     <div v-if="loading">Loading...</div>
-    <div v-else id="bootstrap-overide-abstract" class="abstracts-abstract">
+    <div v-else id="abstract" class="abstracts-abstract">
       <h2>{{abstract.title}}</h2>
       <h5>Posted on {{abstract.day}} {{getDate}}</h5>
       <br>
@@ -18,11 +18,9 @@
         <button type="button" class="btn btn-default" v-on:click="onPrev">
           &lt;
         </button>
-
-   <!--     <button type="button" class="btn btn-default">
+       <button type="button" class="btn btn-default">
           {{$route.params.page}}
-        </button> -->
-
+        </button>
         <button type="button" class="btn btn-default" v-on:click="onNext">
           &gt;
         </button>

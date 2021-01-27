@@ -51,6 +51,10 @@ const newMasonaryInstance = function() {
         itemSelector: '.masonry-grid-item',
         percentPosition: true,
       });
+      const images = document.querySelectorAll(".masonry-grid-item img");
+      for (let i = 0; i < images.length; i++) {
+        images[i].style.opacity = '1';
+      }
     });
   }
 }
@@ -89,6 +93,11 @@ export default {
   .masonry-grid-item img {
     display: block;
     max-width: 100%;
+    opacity: 0;
+    -webkit-transition: opacity .5s ease;
+    -moz-transition: opacity .5s ease;
+    -o-transition: opacity .5s ease;
+    transition: opacity .5s ease;
   }
   .masonry-grid-item a:hover img {
     filter: brightness(90%);
