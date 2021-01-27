@@ -1,28 +1,24 @@
-
 import Axios from 'axios';
 
-const url = 'http://localhost:3000/abstracts';
-
 export function getAbstracts({ commit }) {
+    const url = 'http://localhost:3000/abstracts';
     Axios.get(url).then(response => {
         commit('setAbstracts', response.data.abstracts);
-    })
-    .catch(error => {
+    }).catch(error => {
         console.log(error)
         // this.errored = true
     })
 }
 
-
 const applyFilter = function(x, filter) {
-        if(filter == 'posts/all'){
-            return x;
-        } else {
-            return x.filter(function(abstract) {
-                return abstract.filter === filter;
-            });
-        }
-    };
+    if(filter == 'posts/all'){
+        return x;
+    } else {
+        return x.filter(function(abstract) {
+            return abstract.filter === filter;
+        });
+    }
+};
 
 export function filterAbstracts({ state, commit }, filter) {
     const { abstracts } = state;
@@ -31,6 +27,3 @@ export function filterAbstracts({ state, commit }, filter) {
         commit('setFilteredAbstracts', parsed);
     }
 }
-
-
-

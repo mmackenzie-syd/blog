@@ -1,13 +1,18 @@
 const express = require('express');
 const cors = require('cors');
 const { abstracts } = require('./seedData/Abstracts');
+const { articles } = require('./seedData/Articles');
 
 const app = express();
 
 app.use(cors());
 
 app.get('/article/:id', function (req, res, next) {
-    res.json({msg: 'This is CORS-enabled for all origins!'});
+    const id = req.params.id;
+
+    const article = articles.find(article => article.id === id);
+
+    res.json({ article });
 });
 
 app.get('/abstracts', function (req, res, next) {

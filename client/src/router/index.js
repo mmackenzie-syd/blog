@@ -40,7 +40,7 @@ const routes = [
     component: Blog,
     children: [
       {
-        path: 'article/:page',
+        path: 'article/:id',
         component: Article
       },
       {
