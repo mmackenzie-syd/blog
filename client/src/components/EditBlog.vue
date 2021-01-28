@@ -108,7 +108,6 @@
         const year = '' + /^[0-9]+/.exec(x);
         const day = Number(this.abstract.day);
 
-        console.log('dd', day, month, year)
         this.form.months = CalenderService.getMonths();
         this.form.years = CalenderService.getYears();
         this.form.selectedMonth = month;

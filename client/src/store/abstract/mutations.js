@@ -11,7 +11,6 @@ const populateCategories = function (abstracts) {
             const filterYear = '' +  /^[0-9]+/.exec(abstract.filter) ;
             return ( year === filterYear )
         });
-        console.log('pp', filteredByYear)
         if(filteredByYear.length !== 0){
             months.forEach( function(month) {
                 const lowerCaseMonth = month.toLowerCase();
