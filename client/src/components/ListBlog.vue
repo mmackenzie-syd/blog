@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="list">
+    <div v-if="loading">Loading...</div>
+    <div v-else>
+      <div class="list">
       <div class="row">
         <div class="col-md-6">
           <h2 class="admin-title" ><small>ADMIN</small></h2>
@@ -11,7 +13,7 @@
       </div>
       <br>
     </div>
-    <div class="row">
+      <div class="row">
       <div class="col-md-12" >
         <table  class="list-table">
           <thead>
@@ -22,18 +24,15 @@
           <th class="list-table-title-delete">Delete</th>
           </thead>
           <tbody>
-            <tr>
-              <td class="list-table-title" ><div>hello</div></td>
+            <tr v-for="abstract in abstractsPerPage" :key="abstract.title">
+              <td class="list-table-title" ><div class="list-table-title-ellipsis">{{abstract.title}}</div></td>
               <td class="list-table-abstract" >
-                <div>`<p>JavaScript supports a compact set of statements that you can use to incorporate a great deal of interactivity
-                  in Web pages. This post provides an overview of the Conditional statements.</p>
-                  <p>A conditional statement is a set of commands that executes if a specified condition is true. JavaScript supports
-                    two conditional statements: if...else and switch.</p>`</div>
+                <div>{{abstract.subtxt}}</div>
               </td>
-              <td class="list-table-filter"><div>jun/2017</div></td>
+              <td class="list-table-filter"><div>{{abstract.filter}}</div></td>
               <td class="list-table-edit">
                 <div>
-                  <router-link class="nav-link" :to="`/admin/edit/1`">
+                  <router-link class="nav-link" :to="`/admin/edit/${abstract.articleId}`">
                     Edit
                   </router-link>
                 </div>
@@ -44,43 +43,69 @@
                 </div>
               </td>
             </tr>
-     <!--     <tr ng-repeat="abstract in $ctrl.abstracts | startFrom:($ctrl.currentPage -1) * $ctrl.pageSize | limitTo:$ctrl.pageSize">
-            <td class="list-table-title" ><div>{{abstract.title}}</div></td>
-            <td class="list-table-abstract" ><div ng-bind="abstract.subtxt"></div></td>
-            <td class="list-table-filter"><div>{{abstract.filter}}</div></td>
-            <td class="list-table-edit"><div><a ui-sref="edit({ id: abstract._id, page: $ctrl.currentPage })">Edit</a></div></td>
-            <td class="list-table-delete"><div><a href="#" ng-click="$ctrl.deleteBlog(abstract._id)">Delete</a></div></td>
-          </tr> -->
           </tbody>
         </table>
       </div>
     </div>
-    <div class="row">
+      <div class="row">
       <div class="btn-toolbar col-md-6">
         <button type="button" class="btn btn-default" style="width: 40px; border-radius: 0">
           &lt;
         </button>
         <div type="button" class="btn btn-default" style="text-transform: uppercase; border: 0; color: #777; letter-spacing: 1px;">
-          PAGE  of
+          PAGE  {{page}} of {{pages}}
         </div>
         <button type="button" class="btn btn-default" style="width: 40px; border-radius: 0">
           &gt;
         </button>
       </div>
     </div>
+    </div>
   </div>
 </template>
 
 <script>
 
+import {mapState} from "vuex";
+
 export default {
   name: 'ListBlog',
-  components: {},
+  data () {
+    return {
+      loading: true,
+      perPage: 5,
+      pages: 1,
+      page: 1,
+      abstractsPerPage: [],
+    }
+  },
   methods: {
     addBlog: function() {
         this.$router.push({ path: `/admin/edit` });
     },
+    setData: function() {
+      if (this.abstracts) {
+        this.page = Number(this.$route.params.page);
+        this.pages = Math.ceil(this.abstracts.length /this.perPage);
+        const start = (this.page - 1) * this.perPage;
+        const end = start + this.perPage;
+        this.abstractsPerPage = this.abstracts.slice(start, end);
+      }
+    }
   },
+  computed: {
+    ...mapState('abstract', ['abstracts']),
+  },
+  mounted() {
+    this.loading = false;
+    this.setData()
+  },
+  watch: {
+    abstracts() {
+      this.loading = false;
+      this.setData()
+    }
+  }
 }
 </script>
 
@@ -88,6 +113,8 @@ export default {
   .admin-title {
     margin-top: 0;
     line-height: 1;
+    letter-spacing: 4px;
+    text-transform: uppercase;
   }
   table {
     table-layout: fixed;
@@ -117,6 +144,13 @@ export default {
   .list-table-title {
     width: 20%;
   }
+  .list-table-title-ellipsis {
+    white-space: nowrap;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .list-table-edit,
   .list-table-delete {
     width: 8%;

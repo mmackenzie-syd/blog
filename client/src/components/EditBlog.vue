@@ -115,6 +115,8 @@
         this.form.selectedDay = day;
         this.form.selectedYear = year;
         this.form.days = CalenderService.getDays(month, year);
+        this.form.subtxt = this.abstract.subtxt;
+        this.form.fulltxt = this.article.fulltxt;
       }
     },
     watch: {

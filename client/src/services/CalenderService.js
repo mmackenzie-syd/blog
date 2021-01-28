@@ -34,7 +34,7 @@ const calendar = function () {
             return d.getFullYear().toString();
         },
         getYears: function(){
-            return [2021, 2020, 2019, 2018, 2017, 2016];
+            return [2021, 2020, 2019, 2018, 2017, 2016, 2015];
         },
         getDays: function(month, year){
             if( month != "Feb" ){

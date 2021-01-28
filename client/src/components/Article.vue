@@ -21,11 +21,12 @@
 <script>
   import MonthsFullNameService from '../services/MonthsFullNameService';
   import {mapActions, mapState} from "vuex";
-  import Prism from 'prismjs';
   import 'prismjs/themes/prism.css';
+  import HighlightService from "@/services/HighlightService";
 
   export default {
     name: 'Abstract',
+    components: {},
     data: function () {
       return {
         abstract: null,
@@ -54,22 +55,7 @@
         this.reSet();
       },
       highlight: function(txt){
-        if(txt === undefined)
-          return '';
-        // Convert any HTML code to code with colour on the fly.
-        // HTML code is distiguished by '[code]' brackets. Add color to text only within these brackets.
-        txt = txt.replace(/\[code\]([\s\S]*?)\[\/code\]/g, function(match, txt) {
-          var html = Prism.highlight(txt, Prism.languages.html);
-          return '<div class="color-code"><pre>'  +  html + '</pre></div>';
-        });
-        //
-        // Convert any javascript code to code with colour on the fly.
-        // Javascript code is distiguished by '[codejs]' brackets.
-        txt = txt.replace(/\[codejs\]([\s\S]*?)\[\/codejs\]/g, function(match, txt) {
-          var html = Prism.highlight(txt, Prism.languages.javascript);
-          return '<div class="color-code"><pre>'  +  html + '</pre></div>';
-        });
-        return txt;
+        return HighlightService(txt);
       },
       animateArticle: function() {
         setTimeout(() => {
