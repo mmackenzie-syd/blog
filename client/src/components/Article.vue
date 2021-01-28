@@ -26,8 +26,6 @@
 
   export default {
     name: 'Abstract',
-    components: {},
-    props: ['category', 'index'],
     data: function () {
       return {
         abstract: null,
@@ -77,8 +75,10 @@
         setTimeout(() => {
           const menu = document.getElementById("menu");
           const article = document.getElementById("article");
+          // make menu dynamic
           menu.style.position="relative";
           menu.style.top="0";
+          // slowly open article
           article.style.transition="max-height 3s";
           article.style.maxHeight="10000px";
         },100)
