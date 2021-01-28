@@ -6,7 +6,7 @@
     <br>
     <div v-if="loading">Loading...</div>
     <div v-else class="article-abstract" id="article">
-      <h2>{{article.title}}</h2>
+      <h2>{{abstract.title}}</h2>
       <h5>Posted on {{ abstract.day }} {{getDate}}</h5>
       <br>
       <div v-html="highlight(abstract.subtxt)"></div>

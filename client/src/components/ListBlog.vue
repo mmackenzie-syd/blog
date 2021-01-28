@@ -13,7 +13,7 @@
       </div>
       <br>
     </div>
-      <div class="row">
+    <div class="row" id="blog-table">
       <div class="col-md-12" >
         <table  class="list-table">
           <thead>
@@ -23,7 +23,7 @@
           <th class="list-table-title-edit">Edit</th>
           <th class="list-table-title-delete">Delete</th>
           </thead>
-          <tbody>
+          <tbody class="fixed-height">
             <tr v-for="abstract in abstractsPerPage" :key="abstract.title">
               <td class="list-table-title" ><div class="list-table-title-ellipsis">{{abstract.title}}</div></td>
               <td class="list-table-abstract" >
@@ -47,15 +47,15 @@
         </table>
       </div>
     </div>
-      <div class="row">
+    <div class="row">
       <div class="btn-toolbar col-md-6">
-        <button type="button" class="btn btn-default" style="width: 40px; border-radius: 0">
+        <button type="button" class="btn btn-default" style="width: 40px; border-radius: 0" v-on:click="onPrev">
           &lt;
         </button>
         <div type="button" class="btn btn-default" style="text-transform: uppercase; border: 0; color: #777; letter-spacing: 1px;">
           PAGE  {{page}} of {{pages}}
         </div>
-        <button type="button" class="btn btn-default" style="width: 40px; border-radius: 0">
+        <button type="button" class="btn btn-default" style="width: 40px; border-radius: 0" v-on:click="onNext">
           &gt;
         </button>
       </div>
@@ -91,7 +91,19 @@ export default {
         const end = start + this.perPage;
         this.abstractsPerPage = this.abstracts.slice(start, end);
       }
-    }
+    },
+    onPrev: function() {
+      const prevPage = Number(this.$route.params.page) - 1;
+      if (prevPage > 0 ){
+        this.$router.push({ path: `/admin/list/${prevPage}` });
+      }
+    },
+    onNext: function() {
+      const nextPage = Number(this.$route.params.page) + 1;
+      if (nextPage < this.pages + 1){
+        this.$router.push({ path: `/admin/list/${nextPage}` });
+      }
+    },
   },
   computed: {
     ...mapState('abstract', ['abstracts']),
@@ -103,7 +115,10 @@ export default {
   watch: {
     abstracts() {
       this.loading = false;
-      this.setData()
+      this.setData();
+    },
+    $route() {
+      this.setData();
     }
   }
 }
@@ -164,5 +179,8 @@ export default {
   .list-table-edit,
   .list-table-delete {
     text-align: center;
+  }
+  #blog-table {
+    min-height: 466px;
   }
 </style>
