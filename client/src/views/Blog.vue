@@ -21,7 +21,7 @@
       <div class="blog-recent-posts" v-bind:style="postsHeight">
         <div class="posts">
           <h4 style="text-transform: capitalize;">
-            {{ extractMonth(filter) }} {{ extractYear(filter) }}
+            {{$route.params.month}} {{$route.params.year}}
           </h4>
           <h4 @click="openPosts" v-show="postsHide" class="openPosts"><i class="fa fa-chevron-circle-down"></i></h4>
           <h4 @click="openPosts" v-show="!postsHide" class="openPosts"><i class="fa fa-chevron-circle-up"></i></h4>
@@ -74,7 +74,6 @@ export default {
       archiveHeight: { maxHeight: '210px' },
       postsHide: false,
       postsHeight: { maxHeight: '210px' },
-      filter: ''
     }
   },
   computed: {
@@ -118,14 +117,14 @@ export default {
     loading() {
       if (this.loading === 0) {
         const {month, year} = this.$route.params;
-        this.filter = month + '/' + year;
-        this.filterAbstracts(this.filter);
+        const filter = month + '/' + year;
+        this.filterAbstracts(filter);
       }
     },
     $route() {
       const {month, year} = this.$route.params;
-      this.filter = month + '/' + year;
-      this.filterAbstracts(this.filter);
+      const filter = month + '/' + year;
+      this.filterAbstracts(filter);
     }
   }
 }

@@ -4,7 +4,7 @@
       <small><a href="#" v-on:click="goBack"><span class="glyphicon glyphicon-menu-left" style="top: 3px"></span> Go Back</a></small>
     </h2>
     <br>
-    <div v-if="!canRender">Loading...</div>
+    <div v-if="!abstract">Loading...</div>
     <div v-else class="article-abstract" id="article">
       <h2>{{abstract.title}}</h2>
       <h5>Posted on {{ abstract.day }} {{getDate}}</h5>
@@ -29,13 +29,12 @@
     components: {},
     data: function () {
       return {
-        canRender: false,
-        id: ''
+        abstract: null
       }
     },
     computed: {
       ...mapState('blog', ['article']),
-      ...mapState('blog', ['abstract']),
+      ...mapState('blog', ['abstracts']),
       ...mapState('blog', ['loading']),
       getDate: function() {
         const x = this.abstract.filter;
@@ -46,7 +45,6 @@
     },
     methods: {
       ...mapActions('blog', ['getArticle']),
-      ...mapActions('blog', ['getAbstract']),
       goBack: function() {
         this.$router.go(-1);
       },
@@ -74,9 +72,7 @@
       }
     },
     mounted() {
-      this.id = this.$route.params.id;
-      this.getArticle(this.id);
-      this.getAbstract(this.id);
+      this.getArticle(this.$route.params.id); // make api call to get article
     },
     beforeRouteLeave (to, from, next) {
       this.reSet();
@@ -85,8 +81,7 @@
     watch: {
       loading() {
         if (this.loading === 0) {
-          this.getAbstract(this.id);
-          this.canRender = true;
+          this.abstract = this.abstracts.find(abstract => abstract.articleId === this.article.id);
           this.animateArticle();
         }
       },

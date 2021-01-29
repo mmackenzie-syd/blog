@@ -46,8 +46,7 @@
     computed: {
       ...mapState('blog', ['loading']),
       ...mapState('blog', ['abstract']),
-      ...mapState('blog', ['pages']),
-      ...mapState('blog', ['abstracts']),
+      ...mapState('blog', ['filteredAbstracts']),
       getDate: function() {
         const x = this.abstract.filter;
         const mo = '' + /[a-zA-Z]+/.exec(x);
@@ -58,53 +57,47 @@
     methods: {
       ...mapActions('blog', ['getAbstract']),
       ...mapActions('blog', ['filterAbstracts']),
-      extractFilterfromRoute: function() {
-        return this.$route.params.month + '/' + this.$route.params.year;
-      },
       onPrev: function() {
-        const filter = this.extractFilterfromRoute();
+        const {month, year} = this.$route.params;
+        const filter = month + '/' + year;
         const prevPage = Number(this.$route.params.page) - 1;
         if (prevPage > 0 ){
           this.$router.push({ path: `/blog/${filter}/abstract/${prevPage}` });
         }
       },
       onNext: function() {
-        const filter = this.extractFilterfromRoute();
+        const {month, year} = this.$route.params;
         const nextPage = Number(this.$route.params.page) + 1;
-        if (nextPage < this.pages + 1){
-          this.$router.push({ path: `/blog/${filter}/abstract/${nextPage}` });
+        if (nextPage < this.filteredAbstracts.length + 1){
+          this.$router.push({ path: `/blog/${month}/${year}/abstract/${nextPage}` });
         }
       },
       onRead: function() {
         const id = this.abstract.articleId;
-        const filter = this.extractFilterfromRoute();
-        this.$router.push({ path: `/blog/${filter}/article/${id}`});
+        const {month, year} = this.$route.params;
+        this.$router.push({ path: `/blog/${month}/${year}/article/${id}`});
       },
       highlight: function(txt) {
         return HighlightService(txt);
       }
     },
     mounted() {
-      if (this.abstracts) {
-        const index = Number(this.$route.params.page) - 1;
-        this.getAbstract(index);
-        this.canRender = true;
+      if (this.filteredAbstracts) {
+        this.getAbstract(Number(this.$route.params.page) - 1);
       }
     },
     watch: {
       loading() {
         // this will only happen on page refresh
         if (this.loading === 0) {
-          const filter = this.extractFilterfromRoute();
+          const {month, year} = this.$route.params;
+          const filter = month + '/' + year;
           this.filterAbstracts(filter);
-          const index =  Number(this.$route.params.page) - 1;
-          this.getAbstract(index);
-          this.canRender = true;
+          this.getAbstract(Number(this.$route.params.page) - 1);
         }
       },
       $route() {
-        const index =  Number(this.$route.params.page) - 1;
-        this.getAbstract(index);
+        this.getAbstract(Number(this.$route.params.page) - 1);
       }
     }
   }

@@ -78,5 +78,5 @@ export default {
         }
 
     },
-    getters: {} // dont like using this
+    getters: {} 
 }
