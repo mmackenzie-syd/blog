@@ -22,7 +22,6 @@ export default {
     actions: {
         login({ commit }, payload) {
             commit('setLoading', 1);
-            commit('setError', '');
             const url = 'http://localhost:3000/login';
             Axios.post(url, payload).then(() => {
                 commit('setAuthenticated', true);
@@ -36,6 +35,9 @@ export default {
         logout({ commit }) {
             commit('setAuthenticated', false);
         },
+        reset({ commit }) {
+            commit('setError', '');
+        }
     },
     getters: {}
 }

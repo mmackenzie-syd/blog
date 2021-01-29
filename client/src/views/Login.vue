@@ -3,8 +3,8 @@
       <div class="login-wrap">
         <div class="col-md-6 col-md-offset-3">
           <div class="alert alert-danger alert-dismissible" v-if="error">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Success!</strong> {{error}}
+            <span class="close" aria-label="close" v-on:click="onClose">&times;</span>
+            <strong>Error!</strong> {{error}}
           </div>
           <h2 class="login-title"><small>LOGIN</small></h2>
           <form class="login-form" @submit.prevent="onSubmit">
@@ -42,9 +42,13 @@ export default {
   },
   methods: {
     ...mapActions('user', ['login']),
+    ...mapActions('user', ['reset']),
     onSubmit: function () {
       const { username, password } = this;
       this.login({ username, password })
+    },
+    onClose: function() {
+      this.reset();
     }
   },
   watch: {
