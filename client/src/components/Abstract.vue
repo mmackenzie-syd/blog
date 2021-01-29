@@ -48,8 +48,8 @@
       }
     },
     computed: {
-      ...mapState('abstract', ['filteredAbstracts']),
-      ...mapState('abstract', ['loading']),
+      ...mapState('blog', ['filteredAbstracts']),
+      ...mapState('blog', ['loading']),
       getDate: function() {
         const x = this.abstract.filter;
         const mo = '' + /[a-zA-Z]+/.exec(x);
@@ -58,8 +58,8 @@
       }
     },
     methods: {
-      ...mapActions('abstract', ['getArticle']),
-      ...mapActions('abstract', ['filterAbstracts']),
+      ...mapActions('blog', ['getArticle']),
+      ...mapActions('blog', ['filterAbstracts']),
       getAbstract: function() {
         if (this.filteredAbstracts) {
           this.pages = this.filteredAbstracts.length;

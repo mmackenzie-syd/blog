@@ -1,19 +1,9 @@
 import Axios from "axios";
 import PopulateCategoriesService from "@/services/PopulateCategoriesService";
-
-
-const applyFilter = function(x, filter) {
-    if(filter === 'posts/all'){
-        return x;
-    } else {
-        return x.filter(function(abstract) {
-            return abstract.filter === filter;
-        });
-    }
-};
+import ApplyFilterService from "@/services/ApplyFilterService";
 
 export default {
-    namespaced: true,
+    namespaced: true, // need otherwise won't get namespaced!
     state: {
         abstracts: null,
         article: null,
@@ -57,7 +47,7 @@ export default {
         filterAbstracts({ state, commit }, filter) {
             const { abstracts } = state;
             if (filter && abstracts) {
-                const parsed = applyFilter(abstracts, filter);
+                const parsed = ApplyFilterService(abstracts, filter);
                 commit('setFilteredAbstracts', parsed);
             }
         },
@@ -82,5 +72,5 @@ export default {
         }
 
     },
-    getters: {}
+    getters: {} // dont like using this
 }

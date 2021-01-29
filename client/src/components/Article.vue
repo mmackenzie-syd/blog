@@ -34,9 +34,9 @@
       }
     },
     computed: {
-      ...mapState('abstract', ['article']),
-      ...mapState('abstract', ['abstract']),
-      ...mapState('abstract', ['loading']),
+      ...mapState('blog', ['article']),
+      ...mapState('blog', ['abstract']),
+      ...mapState('blog', ['loading']),
       getDate: function() {
         const x = this.abstract.filter;
         const mo = '' + /[a-zA-Z]+/.exec(x);
@@ -45,8 +45,8 @@
       }
     },
     methods: {
-      ...mapActions('abstract', ['getArticle']),
-      ...mapActions('abstract', ['getAbstract']),
+      ...mapActions('blog', ['getArticle']),
+      ...mapActions('blog', ['getAbstract']),
       goBack: function() {
         this.$router.go(-1);
         this.reSet();
