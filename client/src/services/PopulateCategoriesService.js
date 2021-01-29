@@ -1,5 +1,4 @@
-
-const populateCategories = function (abstracts) {
+const PopulateCategories = function(abstracts){
     // a category is {filter: , number: }
     const years = ['2021', '2020', '2019', '2018', '2017', '2016', '2015'];
     const months = ["Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb", "Jan"];
@@ -30,13 +29,4 @@ const populateCategories = function (abstracts) {
     return categories;
 }
 
-export function setAbstracts(state, abstracts) {
-    state.abstracts = abstracts;
-    state.categories = populateCategories(abstracts);
-}
-
-export function setFilteredAbstracts(state, filteredAbstracts) {
-    state.filteredAbstracts = filteredAbstracts;
-}
-
-
+export default PopulateCategories;

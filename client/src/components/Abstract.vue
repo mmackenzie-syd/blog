@@ -2,7 +2,7 @@
   <div class="abstracts">
     <h2 class="abstracts-title"><small>BLOG</small></h2>
     <br>
-    <div v-if="loading">Loading...</div>
+    <div v-if="!canRender">Loading...</div>
     <div v-else id="abstract" class="abstracts-abstract">
       <h2>{{abstract.title}}</h2>
       <h5>Posted on {{abstract.day}} {{getDate}}</h5>
@@ -26,13 +26,12 @@
         </button>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
   import MonthsFullNameService from '../services/MonthsFullNameService';
-  import {mapState} from "vuex";
+  import {mapActions, mapState} from "vuex";
   import 'prismjs/themes/prism.css';
   import HighlightService from "@/services/HighlightService";
 
@@ -42,13 +41,15 @@
     props: ['category', 'index'],
     data: function () {
       return {
+        pages: 0,
         abstract: null,
-        loading: true,
-        pages: 0
+        canRender: false,
+        filter: ''
       }
     },
     computed: {
       ...mapState('abstract', ['filteredAbstracts']),
+      ...mapState('abstract', ['loading']),
       getDate: function() {
         const x = this.abstract.filter;
         const mo = '' + /[a-zA-Z]+/.exec(x);
@@ -57,12 +58,14 @@
       }
     },
     methods: {
+      ...mapActions('abstract', ['getArticle']),
+      ...mapActions('abstract', ['filterAbstracts']),
       getAbstract: function() {
         if (this.filteredAbstracts) {
           this.pages = this.filteredAbstracts.length;
           const index = Number(this.$route.params.page) - 1;
           this.abstract = this.filteredAbstracts[index];
-          this.loading = false;
+          this.canRender = true; // can only render when we have an abstract
         }
       },
       extractFilterfromRoute: function() {
@@ -70,16 +73,14 @@
       },
       onPrev: function() {
         const prevPage = Number(this.$route.params.page) - 1;
-        const filter = this.extractFilterfromRoute();
         if (prevPage > 0 ){
-          this.$router.push({ path: `/blog/${filter}/abstract/${prevPage}` });
+          this.$router.push({ path: `/blog/${this.filter}/abstract/${prevPage}` });
         }
       },
       onNext: function() {
         const nextPage = Number(this.$route.params.page) + 1;
-        const filter = this.extractFilterfromRoute();
         if (nextPage < this.pages + 1){
-          this.$router.push({ path: `/blog/${filter}/abstract/${nextPage}` });
+          this.$router.push({ path: `/blog/${this.filter}/abstract/${nextPage}` });
         }
       },
       onRead: function() {
@@ -92,11 +93,16 @@
       }
     },
     mounted() {
+      this.filter = this.extractFilterfromRoute();
       this.getAbstract();
     },
     watch: {
-      filteredAbstracts() {
-        this.getAbstract();
+      loading() {
+        // this will only happen on page refresh
+        if (this.loading === 0) {
+          this.filterAbstracts(this.filter);
+          this.getAbstract();
+        }
       },
       $route() {
         this.getAbstract();
