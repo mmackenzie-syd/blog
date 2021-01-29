@@ -49,7 +49,6 @@
       ...mapActions('blog', ['getAbstract']),
       goBack: function() {
         this.$router.go(-1);
-        this.reSet();
       },
       highlight: function(txt){
         return HighlightService(txt);
@@ -79,6 +78,10 @@
       this.getArticle(this.id);
       this.getAbstract(this.id);
     },
+    beforeRouteLeave (to, from, next) {
+      this.reSet();
+      next();
+    },
     watch: {
       loading() {
         if (this.loading === 0) {
@@ -86,7 +89,7 @@
           this.canRender = true;
           this.animateArticle();
         }
-      }
+      },
     }
   }
 

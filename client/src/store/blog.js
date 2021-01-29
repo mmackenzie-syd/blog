@@ -10,7 +10,8 @@ export default {
         abstract: null,
         categories: [],
         filteredAbstracts: null,
-        loading: 0 // allows for multiple api calls at once i.e. call abstracts and article at the same time
+        pages: 0,
+        loading: 0// use a number allows for multiple api calls at once i.e. call abstracts and article at the same time
     },
     mutations: {
         setAbstracts(state, abstracts) {
@@ -20,8 +21,11 @@ export default {
         setFilteredAbstracts(state, filteredAbstracts) {
             state.filteredAbstracts = filteredAbstracts;
         },
+        setPages(state, pages) {
+            state.pages = pages;
+        },
         setLoading(state, val) {
-            const { loading } = state;
+            const loading = state.loading || 0;
             state.loading = loading + val;
         },
         setArticle(state, article) {
@@ -37,6 +41,7 @@ export default {
             const url = 'http://localhost:3000/abstracts';
             Axios.get(url).then(response => {
                 commit('setAbstracts', response.data.abstracts);
+                commit('setFilteredAbstracts', response.data.abstracts);
                 commit('setLoading', -1);
             }).catch(error => {
                 console.log(error)
@@ -49,6 +54,7 @@ export default {
             if (filter && abstracts) {
                 const parsed = ApplyFilterService(abstracts, filter);
                 commit('setFilteredAbstracts', parsed);
+                commit('setPages', parsed.length);
             }
         },
         getArticle({ commit }, id) {
@@ -63,10 +69,10 @@ export default {
                 commit('setLoading', -1);
             })
         },
-        getAbstract({ state, commit }, id) {
-            const { abstracts } = state;
-            if (abstracts) {
-                const abstract = abstracts.find(abstract => abstract.articleId === id);
+        getAbstract({ state, commit }, index) {
+            const { filteredAbstracts } = state;
+            if (filteredAbstracts) {
+                const abstract = filteredAbstracts[index]
                 commit('setAbstract', abstract)
             }
         }

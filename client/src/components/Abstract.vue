@@ -2,7 +2,7 @@
   <div class="abstracts">
     <h2 class="abstracts-title"><small>BLOG</small></h2>
     <br>
-    <div v-if="!canRender">Loading...</div>
+    <div v-if="!abstract">Loading...</div>
     <div v-else id="abstract" class="abstracts-abstract">
       <h2>{{abstract.title}}</h2>
       <h5>Posted on {{abstract.day}} {{getDate}}</h5>
@@ -41,15 +41,13 @@
     props: ['category', 'index'],
     data: function () {
       return {
-        pages: 0,
-        abstract: null,
-        canRender: false,
-        filter: ''
       }
     },
     computed: {
-      ...mapState('blog', ['filteredAbstracts']),
       ...mapState('blog', ['loading']),
+      ...mapState('blog', ['abstract']),
+      ...mapState('blog', ['pages']),
+      ...mapState('blog', ['abstracts']),
       getDate: function() {
         const x = this.abstract.filter;
         const mo = '' + /[a-zA-Z]+/.exec(x);
@@ -58,29 +56,23 @@
       }
     },
     methods: {
-      ...mapActions('blog', ['getArticle']),
+      ...mapActions('blog', ['getAbstract']),
       ...mapActions('blog', ['filterAbstracts']),
-      getAbstract: function() {
-        if (this.filteredAbstracts) {
-          this.pages = this.filteredAbstracts.length;
-          const index = Number(this.$route.params.page) - 1;
-          this.abstract = this.filteredAbstracts[index];
-          this.canRender = true; // can only render when we have an abstract
-        }
-      },
       extractFilterfromRoute: function() {
         return this.$route.params.month + '/' + this.$route.params.year;
       },
       onPrev: function() {
+        const filter = this.extractFilterfromRoute();
         const prevPage = Number(this.$route.params.page) - 1;
         if (prevPage > 0 ){
-          this.$router.push({ path: `/blog/${this.filter}/abstract/${prevPage}` });
+          this.$router.push({ path: `/blog/${filter}/abstract/${prevPage}` });
         }
       },
       onNext: function() {
+        const filter = this.extractFilterfromRoute();
         const nextPage = Number(this.$route.params.page) + 1;
         if (nextPage < this.pages + 1){
-          this.$router.push({ path: `/blog/${this.filter}/abstract/${nextPage}` });
+          this.$router.push({ path: `/blog/${filter}/abstract/${nextPage}` });
         }
       },
       onRead: function() {
@@ -93,19 +85,26 @@
       }
     },
     mounted() {
-      this.filter = this.extractFilterfromRoute();
-      this.getAbstract();
+      if (this.abstracts) {
+        const index = Number(this.$route.params.page) - 1;
+        this.getAbstract(index);
+        this.canRender = true;
+      }
     },
     watch: {
       loading() {
         // this will only happen on page refresh
         if (this.loading === 0) {
-          this.filterAbstracts(this.filter);
-          this.getAbstract();
+          const filter = this.extractFilterfromRoute();
+          this.filterAbstracts(filter);
+          const index =  Number(this.$route.params.page) - 1;
+          this.getAbstract(index);
+          this.canRender = true;
         }
       },
       $route() {
-        this.getAbstract();
+        const index =  Number(this.$route.params.page) - 1;
+        this.getAbstract(index);
       }
     }
   }

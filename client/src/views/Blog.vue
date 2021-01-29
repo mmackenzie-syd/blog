@@ -5,7 +5,8 @@
         <router-view></router-view>
       </div>
     </div>
-    <div class="col-md-3 blog-aside">
+    <div v-if="!filteredAbstracts">...Loading</div>
+    <div v-else class="col-md-3 blog-aside">
       <form>
         <div class="input-group blog-aside-search" >
           <input id="search-box" type="text" class="form-control" placeholder="Search" name="search">
@@ -26,7 +27,11 @@
           <h4 @click="openPosts" v-show="!postsHide" class="openPosts"><i class="fa fa-chevron-circle-up"></i></h4>
         </div>
         <ul class="nav nav-pills nav-stacked">
-          <li v-for="(abstract, index) in filteredAbstracts" :key="abstract.title" :class="[(currentPage === (index + 1)) ? 'active' : '']">
+          <li
+              v-for="(abstract, index) in filteredAbstracts"
+              :key="abstract.title"
+              :class="[(Number($route.params.page) === (index + 1)) ? 'active' : '']"
+          >
             <a>
               {{ abstract.title }}
             </a>
@@ -44,7 +49,7 @@
           <h4 @click="openArchives" v-show="!archiveHide" class="openArchives"><i class="fa fa-chevron-circle-up"></i></h4>
         </div>
         <ul class="nav nav-pills nav-stacked">
-          <li v-for="category in categories" :key="category.filter" :class="[currentPath.includes(category.filter) ? 'active' : '']">
+          <li v-for="category in categories" :key="category.filter" :class="[$route.path.includes(category.filter) ? 'active' : '']">
             <router-link class="nav-link" :to="`/blog/${category.filter}/abstract/1`" >
               {{ extractMonth(category.filter) }}
               {{ extractYear(category.filter) }}
@@ -64,22 +69,21 @@ export default {
   components: {},
   data () {
     return {
+      // dropdown menu state
       archiveHide: false,
       archiveHeight: { maxHeight: '210px' },
       postsHide: false,
       postsHeight: { maxHeight: '210px' },
-      currentPath: '',
-      currentPage: '',
       filter: ''
     }
   },
   computed: {
-    ...mapState('abstract', ['abstracts']),
-    ...mapState('abstract', ['categories']),
-    ...mapState('abstract', ['filteredAbstracts']),
+    ...mapState('blog', ['categories']),
+    ...mapState('blog', ['loading']),
+    ...mapState('blog', ['filteredAbstracts']),
   },
   methods: {
-    ...mapActions('abstract', ['filterAbstracts']),
+    ...mapActions('blog', ['filterAbstracts']),
     extractMonth: function(x) {
       return '' + /[a-zA-Z]+/.exec(x);
     },
@@ -88,11 +92,6 @@ export default {
         return '' + /^[0-9]+/.exec(x);
       }
       return 'all';
-    },
-    applyFilter: function() {
-      const { month, year } = this.$route.params;
-      this.filter = month + '/' + year;
-      this.filterAbstracts(this.filter);
     },
     // For open close posts
     openPosts: function(){
@@ -115,19 +114,18 @@ export default {
       }
     }
   },
-  mounted () {
-    this.applyFilter();
-    this.currentPath = this.$route.path;
-    this.currentPage = Number(this.$route.params.page);
-  },
   watch: {
-    abstracts() {
-      this.applyFilter();
+    loading() {
+      if (this.loading === 0) {
+        const {month, year} = this.$route.params;
+        this.filter = month + '/' + year;
+        this.filterAbstracts(this.filter);
+      }
     },
     $route() {
-      this.applyFilter();
-      this.currentPath = this.$route.path;
-      this.currentPage = Number(this.$route.params.page);
+      const {month, year} = this.$route.params;
+      this.filter = month + '/' + year;
+      this.filterAbstracts(this.filter);
     }
   }
 }

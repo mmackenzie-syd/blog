@@ -60,7 +60,7 @@ export default {
   computed: {
   },
   methods: {
-    ...mapActions('abstract', ['getAbstracts'])
+    ...mapActions('blog', ['getAbstracts'])
   },
   mounted() {
     this.currentPath = this.$route.path;
