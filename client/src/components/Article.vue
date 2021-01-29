@@ -4,7 +4,7 @@
       <small><a href="#" v-on:click="goBack"><span class="glyphicon glyphicon-menu-left" style="top: 3px"></span> Go Back</a></small>
     </h2>
     <br>
-    <div v-if="loading">Loading...</div>
+    <div v-if="!canRender">Loading...</div>
     <div v-else class="article-abstract" id="article">
       <h2>{{abstract.title}}</h2>
       <h5>Posted on {{ abstract.day }} {{getDate}}</h5>
@@ -29,13 +29,13 @@
     components: {},
     data: function () {
       return {
-        abstract: null,
-        loading: true,
+        canRender: false,
       }
     },
     computed: {
-      ...mapState('article', ['article']),
-      ...mapState('abstract', ['abstracts']),
+      ...mapState('abstract', ['article']),
+      ...mapState('abstract', ['abstract']),
+      ...mapState('abstract', ['loading']),
       getDate: function() {
         const x = this.abstract.filter;
         const mo = '' + /[a-zA-Z]+/.exec(x);
@@ -44,12 +44,8 @@
       }
     },
     methods: {
-      ...mapActions('article', ['getArticle']),
-      getAbstract: function(id) {
-        if (this.abstracts) {
-          this.abstract = this.abstracts.find(abstract => abstract.articleId === id)
-        }
-      },
+      ...mapActions('abstract', ['getArticle']),
+      ...mapActions('abstract', ['getAbstract']),
       goBack: function() {
         this.$router.go(-1);
         this.reSet();
@@ -82,22 +78,16 @@
       this.getAbstract(id);
     },
     watch: {
-      article() {
-        if (this.abstracts) {
-          this.loading = false;
-        }
-      },
-      abstracts() {
-        const id = this.$route.params.id;
-        this.getAbstract(id);
-        this.loading = false;
-      },
       loading() {
-        this.animateArticle();
+        if (this.loading === 0) {
+          const id = this.$route.params.id;
+          this.getAbstract(id);
+          this.canRender = true;
+          this.animateArticle();
+        }
       }
     }
   }
-
 
 </script>
 

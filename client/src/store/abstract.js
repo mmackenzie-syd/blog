@@ -16,9 +16,11 @@ export default {
     namespaced: true,
     state: {
         abstracts: null,
+        article: null,
+        abstract: null,
         categories: [],
         filteredAbstracts: null,
-        loading: 0 // allows for multiple api calls at once
+        loading: 0 // allows for multiple api calls at once i.e. call abstracts and article at the same time
     },
     mutations: {
         setAbstracts(state, abstracts) {
@@ -34,6 +36,9 @@ export default {
         },
         setArticle(state, article) {
             state.article = article;
+        },
+        setAbstract(state, abstract) {
+            state.abstract = abstract;
         }
     },
     actions: {
@@ -67,6 +72,13 @@ export default {
                 // this.errored = true
                 commit('setLoading', -1);
             })
+        },
+        getAbstract({ state, commit }, id) {
+            const { abstracts } = state;
+            if (abstracts) {
+                const abstract = abstracts.find(abstract => abstract.articleId === id);
+                commit('setAbstract', abstract)
+            }
         }
 
     },
