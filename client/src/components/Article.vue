@@ -30,6 +30,7 @@
     data: function () {
       return {
         canRender: false,
+        id: ''
       }
     },
     computed: {
@@ -66,6 +67,7 @@
         },100)
       },
       reSet: function() {
+        // fix menu and re-set height
         const menu = document.getElementById("menu");
         menu.style.position="absolute";
         menu.style.top="770px";
@@ -73,15 +75,14 @@
       }
     },
     mounted() {
-      const id = this.$route.params.id;
-      this.getArticle(id);
-      this.getAbstract(id);
+      this.id = this.$route.params.id;
+      this.getArticle(this.id);
+      this.getAbstract(this.id);
     },
     watch: {
       loading() {
         if (this.loading === 0) {
-          const id = this.$route.params.id;
-          this.getAbstract(id);
+          this.getAbstract(this.id);
           this.canRender = true;
           this.animateArticle();
         }
