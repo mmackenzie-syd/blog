@@ -8,7 +8,10 @@ import Abstract from '../components/Abstract.vue';
 import EditBlog from '../components/EditBlog.vue';
 import ListBlog from '../components/ListBlog.vue';
 
-Vue.use(VueRouter)
+import store from '../store/index.js'
+
+Vue.use(VueRouter);
+
 
 const routes = [
   {
@@ -53,6 +56,13 @@ const routes = [
     path: '/admin',
     name: 'Admin',
     component: Admin,
+    beforeEnter: (to, from, next) => {
+        console.log('st', )
+        if (!store.state.user.authenticated) {
+            next('/');
+        }
+        next();
+    },
     children: [
       {
         path: 'list/:page',

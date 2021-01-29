@@ -106,7 +106,7 @@ export default {
     },
   },
   computed: {
-    ...mapState('abstract', ['abstracts']),
+    ...mapState('blog', ['abstracts']),
   },
   mounted() {
     this.loading = false;

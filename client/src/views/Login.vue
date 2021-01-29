@@ -1,48 +1,62 @@
 <template>
   <div class="row login">
-    <div class="col-md-6 col-md-offset-3">
       <div class="login-wrap">
-        <h2 class="login-title"><small>LOGIN</small></h2>
-        <form class="login-form" @submit.prevent="onSubmit">
-          <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" placeholder="Enter username" v-model="username">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="alert alert-danger alert-dismissible" v-if="error">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> {{error}}
           </div>
-          <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Enter password" v-model="password">
-          </div>
-          <button type="submit" class="btn btn-default login-submit">Submit</button>
-        </form>
+          <h2 class="login-title"><small>LOGIN</small></h2>
+          <form class="login-form" @submit.prevent="onSubmit">
+            <div class="form-group">
+              <label for="username">Username:</label>
+              <input type="text" class="form-control" id="username" placeholder="Enter username" v-model="username">
+            </div>
+            <div class="form-group">
+              <label for="pwd">Password:</label>
+              <input type="password" class="form-control" id="pwd" placeholder="Enter password" v-model="password">
+            </div>
+            <button type="submit" class="btn btn-default login-submit">Submit</button>
+          </form>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Axios from 'axios';
+
+import {mapActions, mapState} from "vuex";
+
 export default {
   name: 'Login',
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
     }
   },
+  computed: {
+    ...mapState('user', ['authenticated']),
+    ...mapState('user', ['loading']),
+    ...mapState('user', ['error']),
+  },
   methods: {
+    ...mapActions('user', ['login']),
     onSubmit: function () {
-      const url = 'http://localhost:3000/login';
-      Axios.post(url, {
-        username: this.username,
-        password: this.password,
-      }).then((response) => {
-        console.log(response);
-      }, (error) => {
-        if (error.response) {
-          // Request made and server responded
-          console.log(error.response.data);
-        }
-      });
+      const { username, password } = this;
+      this.login({ username, password })
+    }
+  },
+  watch: {
+    authenticated() {
+      if (this.authenticated) {
+        // re-direct to home page
+        this.$router.push({ path: '/'});
+      }
+    },
+    error() {
+      this.username = '';
+      this.password = '';
     }
   }
 }

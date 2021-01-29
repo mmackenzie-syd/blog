@@ -74,8 +74,8 @@
       }
     },
     computed: {
-      ...mapState('article', ['article']),
-      ...mapState('abstract', ['abstracts']),
+      ...mapState('blog', ['article']),
+      ...mapState('blog', ['abstracts']),
     },
     mounted: function () {
       this.id = this.$route.params.id;

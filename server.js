@@ -27,13 +27,15 @@ app.get('/abstracts', function (req, res, next) {
 app.post('/login', function (req, res, next) {
     const username = req.body.username;
     const password = req.body.password;
+
+    console.log('usr', username)
     if (username !== myUsername) {
         next('user not found');
     }
     if (password !== myPassword) {
        next('incorrect password');
     }
-    res.json({ message: 'successful login' });
+    res.json({ user: username });
 });
 
 app.get('/', (req, res) => {

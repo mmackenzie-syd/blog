@@ -31,11 +31,14 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/contact">CONTACT</router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="!authenticated">
             <router-link class="nav-link" to="/login">LOGIN</router-link>
           </li>
-          <li class="nav-item" :class="[currentPath.includes('/admin') ? 'active' : '']">
+          <li v-if="authenticated" class="nav-item" :class="[currentPath.includes('/admin') ? 'active' : '']">
             <router-link class="nav-link" to="/admin/list/1">ADMIN</router-link>
+          </li>
+          <li class="nav-item" v-if="authenticated">
+            <button class="logout-btn" v-on:click="onLogout">LOGOUT</button>
           </li>
         </ul>
       </nav>
@@ -48,7 +51,7 @@
 
 <script>
 // @ is an alias to /src
-import { mapActions } from 'vuex';
+import {mapActions, mapState} from 'vuex';
 
 export default {
   name: 'App',
@@ -58,9 +61,16 @@ export default {
     }
   },
   computed: {
+    ...mapState('user', ['authenticated'])
   },
   methods: {
-    ...mapActions('blog', ['getAbstracts'])
+    ...mapActions('blog', ['getAbstracts']),
+    ...mapActions('user', ['logout']),
+    onLogout: function() {
+      this.logout();
+      // re-direct to home page
+      this.$router.push({ path: '/'});
+    }
   },
   mounted() {
     this.currentPath = this.$route.path;
@@ -81,6 +91,18 @@ export default {
   .btn,
   .form-control {
     border-radius: 0;
+  }
+
+  .logout-btn {
+    background-color: #222;
+    border: 0;
+    color: #9d9d9d;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .logout-btn:hover {
+    color: #fff;
   }
 
   .container {
