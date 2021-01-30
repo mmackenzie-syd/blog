@@ -84,7 +84,7 @@
       this.getAbstract(this.id);
     },
     methods: {
-      ...mapActions('article', ['getArticle']),
+      ...mapActions('blog', ['getArticle']),
       getAbstract: function(id) {
         if (this.abstracts) {
           this.abstract = this.abstracts.find(abstract => abstract.articleId === id)

@@ -1,13 +1,15 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+require("dotenv").config();
+
+const authenticateToken = require("./Authentication/authenticateToken");
+const generateToken = require("./Authentication/generateToken");
+
 const { abstracts } = require('./seedData/Abstracts');
 const { articles } = require('./seedData/Articles');
 
 const app = express();
-
-const myUsername = 'mark@example.com';
-const myPassword = 'elephant';
 
 app.use(cors());
 app.use(bodyParser.json()); // gives req.body
@@ -25,26 +27,28 @@ app.get('/abstracts', function (req, res, next) {
 });
 
 app.post('/login', function (req, res, next) {
-    const username = req.body.username;
+    const user = req.body.username;
     const password = req.body.password;
 
-    console.log('usr', username)
-    if (username !== myUsername) {
+    if (user !== process.env.APP_USER) {
         next('user not found');
+        return;
     }
-    if (password !== myPassword) {
-       next('incorrect password');
+    if (password !== process.env.PASSWORD) {
+        next('incorrect password');
+        return
     }
-    res.json({ user: username });
+    const token = generateToken(user);
+    res.status(200).json({ user, token });
 });
+
+// protected routes
+app.get('/api', authenticateToken, (req, res) => {
+    console.log('authen')
+})
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
-});
-
-app.use(function(err, req, res, next) {
-    res.status(404);
-    res.send("Oops, something went wrong.")
 });
 
 app.listen(3000, function () {
