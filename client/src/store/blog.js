@@ -38,7 +38,7 @@ export default {
     actions: {
         getAbstracts({ commit }) {
             commit('setLoading', 1);
-            const url = 'http://localhost:3000/abstracts';
+            const url = 'http://localhost:3000/blog/abstracts';
             Axios.get(url).then(response => {
                 commit('setAbstracts', response.data.abstracts);
                 commit('setFilteredAbstracts', response.data.abstracts);
@@ -59,7 +59,7 @@ export default {
         },
         getArticle({ commit }, id) {
             commit('setLoading', 1);
-            const url = `http://localhost:3000/article/${id}`;
+            const url = `http://localhost:3000/blog/article/${id}`;
             Axios.get(url).then(response => {
                 commit('setArticle', response.data.article);
                 commit('setLoading', -1);

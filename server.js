@@ -1,30 +1,18 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const blog = require('./routes/blog');
 require("dotenv").config();
 
 const authenticateToken = require("./Authentication/authenticateToken");
 const generateToken = require("./Authentication/generateToken");
-
-const { abstracts } = require('./seedData/Abstracts');
-const { articles } = require('./seedData/Articles');
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json()); // gives req.body
 
-app.get('/article/:id', function (req, res, next) {
-    const id = req.params.id;
-
-    const article = articles.find(article => article.id === id);
-
-    res.json({ article });
-});
-
-app.get('/abstracts', function (req, res, next) {
-    res.json({ abstracts });
-});
+app.use('/blog', blog);
 
 app.post('/login', function (req, res, next) {
     const user = req.body.username;
@@ -43,14 +31,10 @@ app.post('/login', function (req, res, next) {
 });
 
 // protected routes
-app.get('/api', authenticateToken, (req, res) => {
-    console.log('authen')
-})
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+// app.get('/api', authenticateToken, (req, res) => {
+//     console.log('authen')
+// })
 
 app.listen(3000, function () {
-    console.log('CORS-enabled web server listening on port 3000')
+    console.log('Listening on port 3000')
 });
