@@ -40,7 +40,6 @@
           <li class="nav-item" v-if="authenticated">
             <button class="logout-btn" v-on:click="onLogout">LOGOUT</button>
           </li>
-          <button class="logout-btn" v-on:click="onTestToken">Test Token</button>
         </ul>
       </nav>
       <footer>
@@ -53,7 +52,6 @@
 <script>
 // @ is an alias to /src
 import {mapActions, mapState} from 'vuex';
-import Axios from "axios";
 
 export default {
   name: 'App',
@@ -74,15 +72,6 @@ export default {
       // re-direct to home page
       this.$router.push({ path: '/'});
     },
-    onTestToken: function() {
-      const url = 'http://localhost:3000/api';
-      Axios.get(url, { headers: { authorization: this.token} })
-          .then(response => {
-            console.log('response', response.data)
-          }).catch(error => {
-            console.log(error)
-          });
-    }
   },
   mounted() {
     this.currentPath = this.$route.path;

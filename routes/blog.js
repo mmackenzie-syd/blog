@@ -97,7 +97,6 @@ router.get('/abstracts', function(req, res, next) {
     });
 });
 
-
 // Get Article
 router.get('/article/:id', function(req, res, next) {
     const id = req.params.id;
@@ -110,4 +109,4 @@ router.get('/article/:id', function(req, res, next) {
     });
 });
 
-module.exports = router; // don't forget to return it
+module.exports = router;
