@@ -13,16 +13,16 @@
           <a href="https://webpack.js.org/" target="_blank"><img src="/images/03.jpg"/></a>
         </div>
         <div class="masonry-grid-item">
-          <a href="https://developer.mozilla.org/bm/docs/Web/JavaScript" target="_blank"><img src="/images/04.jpg"/></a>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank"><img src="/images/04.jpg"/></a>
         </div>
         <div class="masonry-grid-item">
           <a href="https://gruntjs.com/" target="_blank"><img src="/images/05.jpg"/></a>
         </div>
         <div class="masonry-grid-item">
-          <a href="https://github.com/" target="_blank"><img src="/images/06.jpg"/></a>
+          <a href="https://github.com/mmackenzie-syd" target="_blank"><img src="/images/06.jpg"/></a>
         </div>
         <div class="masonry-grid-item">
-          <a href="https://angularjs.org/" target="_blank"><img src="/images/07.jpg"/></a>
+          <a href="https://angular.io/" target="_blank"><img src="/images/07.jpg"/></a>
         </div>
         <div class="masonry-grid-item">
           <a href="https://nodejs.org/en/" target="_blank"><img src="/images/08.jpg"/></a>
