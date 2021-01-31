@@ -38,6 +38,21 @@ router.get('/seed', asyncHandler(async (req, res, next) => {
 
 // Create Blog
 router.post('/', authenticateToken, asyncHandler(async (req, res) => {
+    const { title, filter, day, subtxt, fulltxt, abstractId } = req.body;
+    const sortIndex = calculateSortIndex(filter, day);
+
+    // save new article
+    const createdArticle = new Article({ fulltxt });
+    await createdArticle.save();
+
+    // save new abstract
+    const createdAbstract = new Abstract({
+        title, filter, day, subtxt, sortIndex,
+        articleId: createdArticle._id
+    });
+    await createdAbstract.save();
+
+    res.send('successful create blog');
 
 }));
 
