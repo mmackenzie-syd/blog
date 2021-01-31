@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
+const calculateSortIndex = require("../utilities/calculateSortIndex");
 
 const Article = require('../models/Article.js');
 const Abstract = require('../models/Abstract.js');
@@ -28,12 +29,7 @@ router.get('/seed', asyncHandler(async (req, res, next) => {
             subtxt,
             articleId: createdArticle._id
         });
-        await createdAbstract.save( function(err, abstract){ //  // the new article is returned from save if no error
-            if (err) {
-                console.log(err);
-                return next();
-            }
-        });
+        await createdAbstract.save();
     }
     res.send('blog successfully seeded with data');
     console.log('createdArticles', createdArticles);
@@ -45,9 +41,27 @@ router.post('/', function(req, res) {
 });
 
 // Edit Blog
-router.put('/:id', function(req, res){
+router.put('/:id', asyncHandler(async (req, res) => {
+    const { title, filter, day, subtxt, fulltxt, abstractId } = req.body;
+    const sortIndex = calculateSortIndex(filter, day);
 
-});
+    // delete existing article and abstract
+    await Article.deleteOne({ _id: req.params.id });
+    await Abstract.deleteOne({ _id: abstractId });
+
+    // save new article
+    const createdArticle = new Article({ fulltxt });
+    await createdArticle.save();
+
+    // save new abstract
+    const createdAbstract = new Abstract({
+        title, filter, day, subtxt, sortIndex,
+        articleId: createdArticle._id
+    });
+    await createdAbstract.save();
+
+    res.send('successful edit');
+}));
 
 // Delete Blog
 router.delete('/:id', function(req, res){
@@ -56,7 +70,7 @@ router.delete('/:id', function(req, res){
 
 // Get Abstracts
 router.get('/abstracts', function(req, res, next) {
-    Abstract.find().sort({sortIdx: -1}).exec(function (err, abstracts) {
+    Abstract.find().sort({sortIndex: -1}).exec(function (err, abstracts) {
         if(err){
             next();
             return console.log(err);

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="loading">Loading...</div>
-    <form v-else role="form">
+    <form v-else role="form" @submit.prevent="onSubmit">
       <div class="row">
         <div class="col-md-4 col-md-offset-1">
           <h2 class="edit-title">
@@ -51,9 +51,11 @@
 </template>
 
 <script>
+  import Axios from "axios";
   import CalenderService from '../services/CalenderService';
   import {mapActions, mapState} from "vuex";
   import MonthsNameService from "@/services/MonthsNameService";
+  import MonthsReverseNameService from "@/services/MonthsReverseNameService";
 
   export default {
     name: 'EditBlog',
@@ -62,6 +64,7 @@
       return {
         id: null,
         loading: true,
+        saving: false,
         abstract: null,
         form: {
           months: [],
@@ -76,6 +79,7 @@
     computed: {
       ...mapState('blog', ['article']),
       ...mapState('blog', ['abstracts']),
+      ...mapState('user', ['token'])
     },
     mounted: function () {
       this.id = this.$route.params.id;
@@ -116,6 +120,26 @@
         this.form.days = CalenderService.getDays(month, year);
         this.form.subtxt = this.abstract.subtxt;
         this.form.fulltxt = this.article.fulltxt;
+      },
+      onSubmit: function() {
+        // use abstract id not article id
+        const url = `http://localhost:3000/blog/${this.id}`;
+        const {
+          selectedMonth,
+          selectedYear,
+          selectedDay: day,
+          subtxt,
+          fulltxt,
+          title,
+        } = this.form;
+        const filter = selectedYear + '/' +  MonthsReverseNameService[selectedMonth];
+        const abstractId = this.abstract._id;
+        Axios.put(url, { title, filter, day, subtxt, fulltxt, abstractId })
+            .then((response) => {
+              console.log('response', response.data);
+            }).catch(error => {
+              console.log(error);
+            });
       }
     },
     watch: {
