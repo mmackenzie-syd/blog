@@ -10,7 +10,6 @@ const { articlesSeed, abstractsSeed } = require('../utilities/buildSeedData')(da
 
 
 // Seed Database with default data
-
 router.get('/seed', asyncHandler(async (req, res, next) => {
     // remove existing data
     await Article.remove({});
@@ -46,12 +45,12 @@ router.post('/', function(req, res) {
 });
 
 // Edit Blog
-router.put('/:_id', function(req, res){
+router.put('/:id', function(req, res){
 
 });
 
 // Delete Blog
-router.delete('/:_id', function(req, res){
+router.delete('/:id', function(req, res){
 
 });
 
