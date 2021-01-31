@@ -140,7 +140,11 @@
         const abstractId = this.abstract._id;
         try {
           this.saving = true;
-          await Axios.put(url, { title, filter, day, subtxt, fulltxt, abstractId });
+          await Axios.put(
+              url,
+              { title, filter, day, subtxt, fulltxt, abstractId },
+              { headers: { authorization: this.token} }
+          );
           this.saving = false;
           this.getAbstracts();
           this.$router.go(-1);

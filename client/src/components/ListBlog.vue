@@ -80,6 +80,10 @@ export default {
       abstractsPerPage: [],
     }
   },
+  computed: {
+    ...mapState('blog', ['abstracts']),
+    ...mapState('user', ['token'])
+  },
   methods: {
     ...mapActions('blog', ['getAbstracts']),
     addBlog: function() {
@@ -110,16 +114,13 @@ export default {
       const url = `http://localhost:3000/blog/${abstractId}/${articleId}`;
       try {
         this.saving = true;
-        await Axios.delete(url);
+        await Axios.delete(url, { headers: { authorization: this.token} });
         this.saving = false;
         this.getAbstracts();
       } catch (error) {
         console.error(error);
       }
     },
-  },
-  computed: {
-    ...mapState('blog', ['abstracts']),
   },
   mounted() {
     this.loading = false;

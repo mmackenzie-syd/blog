@@ -5,6 +5,7 @@ const calculateSortIndex = require("../utilities/calculateSortIndex");
 
 const Article = require('../models/Article.js');
 const Abstract = require('../models/Abstract.js');
+const authenticateToken = require("../authentication/authenticateToken");
 
 const { data } = require('../seedData/Data');
 const { articlesSeed, abstractsSeed } = require('../utilities/buildSeedData')(data);
@@ -36,12 +37,12 @@ router.get('/seed', asyncHandler(async (req, res, next) => {
 }));
 
 // Create Blog
-router.post('/', function(req, res) {
+router.post('/', authenticateToken, asyncHandler(async (req, res) => {
 
-});
+}));
 
 // Edit Blog
-router.put('/:id', asyncHandler(async (req, res) => {
+router.put('/:id', authenticateToken,, asyncHandler(async (req, res) => {
     const { title, filter, day, subtxt, fulltxt, abstractId } = req.body;
     const sortIndex = calculateSortIndex(filter, day);
 
@@ -64,7 +65,7 @@ router.put('/:id', asyncHandler(async (req, res) => {
 }));
 
 // Delete Blog
-router.delete('/:abstractId/:articleId', asyncHandler(async (req, res) => {
+router.delete('/:abstractId/:articleId', authenticateToken, asyncHandler(async (req, res) => {
     const { articleId, abstractId } = req.params;
     await Article.deleteOne({ _id: articleId });
     await Abstract.deleteOne({ _id: abstractId });

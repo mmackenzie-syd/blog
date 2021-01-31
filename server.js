@@ -14,10 +14,7 @@ db.once('open', function() {
 });
 
 /* Expressjs */
-
-const authenticateToken = require("./authentication/authenticateToken");
 const generateToken = require("./authentication/generateToken");
-
 const app = express();
 
 app.use(cors());
@@ -28,7 +25,6 @@ app.use('/blog', blog);
 app.post('/login', function (req, res, next) {
     const user = req.body.username;
     const password = req.body.password;
-
     if (user !== process.env.APP_USER) {
         next('user not found');
         return;
@@ -44,11 +40,6 @@ app.post('/login', function (req, res, next) {
 app.get('/', (req, res) => {
     res.send('blog api')
 })
-
-// protected routes
-// app.get('/api', authenticateToken, (req, res) => {
-//     console.log('authen')
-// })
 
 app.listen(3000, function () {
     console.log('Listening on port 3000')
