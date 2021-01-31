@@ -64,9 +64,12 @@ router.put('/:id', asyncHandler(async (req, res) => {
 }));
 
 // Delete Blog
-router.delete('/:id', function(req, res){
-
-});
+router.delete('/:abstractId/:articleId', asyncHandler(async (req, res) => {
+    const { articleId, abstractId } = req.params;
+    await Article.deleteOne({ _id: articleId });
+    await Abstract.deleteOne({ _id: abstractId });
+    res.send('successful delete');
+}));
 
 // Get Abstracts
 router.get('/abstracts', function(req, res, next) {

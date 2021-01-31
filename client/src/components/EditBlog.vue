@@ -1,6 +1,7 @@
 <template>
   <div>
     <div v-if="loading">Loading...</div>
+    <div v-if="saving">Saving Changes...</div>
     <form v-else role="form" @submit.prevent="onSubmit">
       <div class="row">
         <div class="col-md-4 col-md-offset-1">
@@ -89,39 +90,42 @@
     },
     methods: {
       ...mapActions('blog', ['getArticle']),
+      ...mapActions('blog', ['getAbstracts']),
       getAbstract: function(id) {
         if (this.abstracts) {
           this.abstract = this.abstracts.find(abstract => abstract.articleId === id)
         }
       },
       onCancel: function() {
-        this.$router.go(-1)
+        this.$router.go(-1);
       },
       changeDate: function() {
         const { selectedMonth, selectedYear, selectedDay } = this.form;
         this.form.days = CalenderService.getDays(selectedMonth, selectedYear);
-        if(selectedDay > this.days.length)
+        if (selectedDay > this.days.length) {
           this.form.selectedDay = this.days.length.toString();
+        }
       },
 
       initialiseForm: function() {
-        this.form.title = this.abstract.title;
-        const x = this.abstract.filter;
-        const mo = '' + /[a-zA-Z]+/.exec(x);
+        const { title, filter, day, subtxt, fulltxt } = this.abstract;
+        const mo = '' + /[a-zA-Z]+/.exec(filter);
         const month = MonthsNameService[mo];
-        const year = '' + /^[0-9]+/.exec(x);
-        const day = Number(this.abstract.day);
+        const year = '' + /^[0-9]+/.exec(filter);
 
-        this.form.months = CalenderService.getMonths();
-        this.form.years = CalenderService.getYears();
-        this.form.selectedMonth = month;
-        this.form.selectedDay = day;
-        this.form.selectedYear = year;
-        this.form.days = CalenderService.getDays(month, year);
-        this.form.subtxt = this.abstract.subtxt;
-        this.form.fulltxt = this.article.fulltxt;
+        this.form = {
+          title,
+          subtxt,
+          fulltxt,
+          months: CalenderService.getMonths(),
+          years: CalenderService.getYears(),
+          selectedMonth: month,
+          selectedDay: Number(day),
+          selectedYear: year,
+          days: CalenderService.getDays(month, year),
+        };
       },
-      onSubmit: function() {
+      onSubmit: async function() {
         // use abstract id not article id
         const url = `http://localhost:3000/blog/${this.id}`;
         const {
@@ -134,12 +138,15 @@
         } = this.form;
         const filter = selectedYear + '/' +  MonthsReverseNameService[selectedMonth];
         const abstractId = this.abstract._id;
-        Axios.put(url, { title, filter, day, subtxt, fulltxt, abstractId })
-            .then((response) => {
-              console.log('response', response.data);
-            }).catch(error => {
-              console.log(error);
-            });
+        try {
+          this.saving = true;
+          await Axios.put(url, { title, filter, day, subtxt, fulltxt, abstractId });
+          this.saving = false;
+          this.getAbstracts();
+          this.$router.go(-1);
+        } catch (error) {
+          console.error(error);
+        }
       }
     },
     watch: {

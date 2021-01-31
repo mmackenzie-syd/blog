@@ -39,7 +39,7 @@
               </td>
               <td class="list-table-delete">
                 <div>
-                  <a href="#">Delete</a>
+                  <button class="btn-link btn-delete" v-on:click="onDelete(abstract._id, abstract.articleId)">Delete</button>
                 </div>
               </td>
             </tr>
@@ -66,7 +66,8 @@
 
 <script>
 
-import {mapState} from "vuex";
+import {mapActions, mapState} from "vuex";
+import Axios from "axios";
 
 export default {
   name: 'ListBlog',
@@ -80,6 +81,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('blog', ['getAbstracts']),
     addBlog: function() {
         this.$router.push({ path: `/admin/edit` });
     },
@@ -102,6 +104,17 @@ export default {
       const nextPage = Number(this.$route.params.page) + 1;
       if (nextPage < this.pages + 1){
         this.$router.push({ path: `/admin/list/${nextPage}` });
+      }
+    },
+    onDelete: async function(abstractId, articleId) {
+      const url = `http://localhost:3000/blog/${abstractId}/${articleId}`;
+      try {
+        this.saving = true;
+        await Axios.delete(url);
+        this.saving = false;
+        this.getAbstracts();
+      } catch (error) {
+        console.error(error);
       }
     },
   },
@@ -182,5 +195,10 @@ export default {
   }
   #blog-table {
     min-height: 466px;
+  }
+  .btn-delete {
+    border: 0;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 </style>
