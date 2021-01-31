@@ -9,6 +9,7 @@ import EditBlog from '../components/EditBlog.vue';
 import ListBlog from '../components/ListBlog.vue';
 
 import store from '../store/index.js'
+import AddBlog from "@/components/AddBlog";
 
 Vue.use(VueRouter);
 
@@ -73,8 +74,8 @@ const routes = [
         component: EditBlog
       },
       {
-        path: 'edit',
-        component: EditBlog
+        path: 'add',
+        component: AddBlog
       }
     ]
   }

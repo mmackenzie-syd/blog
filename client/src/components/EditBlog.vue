@@ -108,7 +108,7 @@
       },
 
       initialiseForm: function() {
-        const { title, filter, day, subtxt, fulltxt } = this.abstract;
+        const { title, filter, day, subtxt } = this.abstract;
         const mo = '' + /[a-zA-Z]+/.exec(filter);
         const month = MonthsNameService[mo];
         const year = '' + /^[0-9]+/.exec(filter);
@@ -116,7 +116,7 @@
         this.form = {
           title,
           subtxt,
-          fulltxt,
+          fulltxt: this.article.fulltxt,
           months: CalenderService.getMonths(),
           years: CalenderService.getYears(),
           selectedMonth: month,

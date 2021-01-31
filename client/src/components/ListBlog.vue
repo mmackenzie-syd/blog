@@ -87,7 +87,7 @@ export default {
   methods: {
     ...mapActions('blog', ['getAbstracts']),
     addBlog: function() {
-        this.$router.push({ path: `/admin/edit` });
+        this.$router.push({ path: `/admin/add` });
     },
     setData: function() {
       if (this.abstracts) {

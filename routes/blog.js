@@ -33,7 +33,6 @@ router.get('/seed', asyncHandler(async (req, res, next) => {
         await createdAbstract.save();
     }
     res.send('blog successfully seeded with data');
-    console.log('createdArticles', createdArticles);
 }));
 
 // Create Blog
@@ -57,7 +56,7 @@ router.post('/', authenticateToken, asyncHandler(async (req, res) => {
 }));
 
 // Edit Blog
-router.put('/:id', authenticateToken,, asyncHandler(async (req, res) => {
+router.put('/:id', authenticateToken, asyncHandler(async (req, res) => {
     const { title, filter, day, subtxt, fulltxt, abstractId } = req.body;
     const sortIndex = calculateSortIndex(filter, day);
 
