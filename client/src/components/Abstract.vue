@@ -75,6 +75,7 @@
       onRead: function() {
         const id = this.abstract.articleId;
         const {month, year} = this.$route.params;
+        console.log('id', id)
         this.$router.push({ path: `/blog/${month}/${year}/article/${id}`});
       },
       highlight: function(txt) {

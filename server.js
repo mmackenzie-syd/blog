@@ -4,8 +4,19 @@ const bodyParser = require('body-parser');
 const blog = require('./routes/blog');
 require("dotenv").config();
 
-const authenticateToken = require("./Authentication/authenticateToken");
-const generateToken = require("./Authentication/generateToken");
+/* Mongoose connection */
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/blog', {useNewUrlParser: true, useUnifiedTopology: true});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    console.log('database connected');
+});
+
+/* Expressjs */
+
+const authenticateToken = require("./authentication/authenticateToken");
+const generateToken = require("./authentication/generateToken");
 
 const app = express();
 
@@ -29,6 +40,10 @@ app.post('/login', function (req, res, next) {
     const token = generateToken(user);
     res.status(200).json({ user, token });
 });
+
+app.get('/', (req, res) => {
+    res.send('blog api')
+})
 
 // protected routes
 // app.get('/api', authenticateToken, (req, res) => {
