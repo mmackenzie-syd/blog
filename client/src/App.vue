@@ -25,13 +25,13 @@
           <li class="nav-item" :class="[currentPath.includes('/blog') ? 'active' : '']">
             <router-link class="nav-link" to="/blog/posts/all/abstract/1">BLOG</router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" :class="[currentPath.includes('/about') ? 'active' : '']">
             <router-link class="nav-link" to="/about">ABOUT</router-link>
           </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/contact">CONTACT</router-link>
+          <li class="nav-item" :class="[currentPath.includes('/contact') ? 'active' : '']">
+            <router-link class="nav-link"  to="/contact">CONTACT</router-link>
           </li>
-          <li class="nav-item" v-if="!authenticated">
+          <li class="nav-item" v-if="!authenticated" :class="[currentPath.includes('/login') ? 'active' : '']">
             <router-link class="nav-link" to="/login">LOGIN</router-link>
           </li>
           <li v-if="authenticated" class="nav-item" :class="[currentPath.includes('/admin') ? 'active' : '']">
