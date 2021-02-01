@@ -2,8 +2,6 @@
 
 A personal blog built using Mongo, GraphQL (Apollo client/server), Vue and Node.
 
-Built by a developer for developers.
-
 ## Client Project setup
 ```
 npm install
