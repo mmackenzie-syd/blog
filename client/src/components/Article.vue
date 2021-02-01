@@ -81,6 +81,7 @@
     watch: {
       loading() {
         if (this.loading === 0) {
+          console.log('art', this.article)
           this.abstract = this.abstracts.find(abstract => abstract.articleId === this.article._id);
           this.animateArticle();
         }
