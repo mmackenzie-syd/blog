@@ -1,7 +1,6 @@
 import { gql } from 'apollo-boost';
 
-/* Blog Queries */
-
+/* Blog */
 export const GET_ABSTRACTS = gql`
     query {
         getAbstracts {
@@ -20,5 +19,14 @@ export const GET_ARTICLE = gql`
         getArticle(id: $id) {
             _id
             fulltxt
+        }
+    }`;
+
+/* User */
+export const LOGIN = gql`
+    query($username: String!, $password: String!) {
+        login(username: $username, password: $password) {
+            token
+            username
         }
     }`;

@@ -2,7 +2,7 @@ import PopulateCategoriesService from "@/services/PopulateCategoriesService";
 import ApplyFilterService from "@/services/ApplyFilterService";
 
 import { defaultClient as apolloClient } from '../main';
-import { GET_ARTICLE, GET_ABSTRACTS } from "@/store/queries";
+import { GET_ARTICLE, GET_ABSTRACTS } from "@/store/graph";
 
 export default {
     namespaced: true, // need otherwise won't get namespaced!

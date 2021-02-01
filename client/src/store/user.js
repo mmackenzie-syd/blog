@@ -1,4 +1,5 @@
-import Axios from "axios";
+import { defaultClient as apolloClient } from '../main';
+import { LOGIN } from "@/store/graph";
 
 export default {
     namespaced: true, // need otherwise won't get namespaced!
@@ -26,12 +27,16 @@ export default {
     actions: {
         login({ commit }, payload) {
             commit('setLoading', 1);
-            const url = 'http://localhost:3000/login';
-            Axios.post(url, payload).then(response => {
+            apolloClient.query({
+                query: LOGIN,
+                variables: payload
+            })
+            .then(({ data }) => {
                 commit('setAuthenticated', true);
-                commit('setToken', response.data.token);
+                commit('setToken', data.login);
                 commit('setLoading', -1);
-            }).catch(error => {
+            })
+            .catch(error => {
                 console.error(error)
                 commit('setLoading', -1);
                 commit('setError', 'incorrect username or password');
