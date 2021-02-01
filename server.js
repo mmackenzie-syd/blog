@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const blog = require('./routes/blog');
+const { ApolloServer, AuthenticationError } = require("apollo-server");
 require("dotenv").config();
 
 /* Mongoose connection */
