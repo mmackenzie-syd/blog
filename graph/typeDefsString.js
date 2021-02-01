@@ -16,7 +16,11 @@ module.exports = `
         token: String
         username: String
     }
+    type Message {
+        txt: String
+    }
     type Query {
+        seed: Message
         getAbstracts: [Abstract]
         getArticle(id: ID): Article
         login(username: String, password: String): User

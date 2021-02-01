@@ -1,38 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const calculateSortIndex = require("../utilities/calculateSortIndex");
-
 const Article = require('../models/Article.js');
 const Abstract = require('../models/Abstract.js');
 const authenticateToken = require("../authentication/authenticateToken");
-
-const { data } = require('../seedData/Data');
-const { articlesSeed, abstractsSeed } = require('../utilities/buildSeedData')(data);
-
-
-// Seed Database with default data
-router.get('/seed', asyncHandler(async (req, res, next) => {
-    // remove existing data
-    await Article.remove({});
-    await Abstract.remove({});
-    //
-    const createdArticles = await Article.insertMany(articlesSeed);
-    for (let i = 0; i < createdArticles.length; i++) {
-        const createdArticle = createdArticles[i];
-        const { title, filter, day, subtxt, sortIndex } = abstractsSeed[i];
-        // because async works in a for loop
-        const createdAbstract = new Abstract({
-            title,
-            filter,
-            day,
-            sortIndex,
-            subtxt,
-            articleId: createdArticle._id
-        });
-        await createdAbstract.save();
-    }
-    res.send('blog successfully seeded with data');
-}));
 
 // Create Blog
 router.post('/', authenticateToken, asyncHandler(async (req, res) => {
@@ -84,28 +55,5 @@ router.delete('/:abstractId/:articleId', authenticateToken, asyncHandler(async (
     await Abstract.deleteOne({ _id: abstractId });
     res.send('successful delete');
 }));
-
-// Get Abstracts
-router.get('/abstracts', function(req, res, next) {
-    Abstract.find().sort({sortIndex: -1}).exec(function (err, abstracts) {
-        if(err){
-            next();
-            return console.log(err);
-        }
-        res.json({ abstracts });
-    });
-});
-
-// Get Article
-router.get('/article/:id', function(req, res, next) {
-    const id = req.params.id;
-    Article.findOne({ _id: id }, function(err, article){
-        if(err){
-            return next();
-        } else {
-            res.json({ article });
-        }
-    });
-});
 
 module.exports = router;
