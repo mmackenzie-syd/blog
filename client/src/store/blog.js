@@ -50,7 +50,6 @@ export default {
             }).catch(error => {
                 console.log(error)
                 commit('setLoading', -1);
-                // this.errored = true
             })
         },
         filterAbstracts({ state, commit }, filter) {
@@ -73,7 +72,6 @@ export default {
             })
             .catch(error => {
                 console.log(error)
-                // this.errored = true
                 commit('setLoading', -1);
             })
         },

@@ -26,9 +26,8 @@ module.exports = `
         login(username: String, password: String): User
     }
     type Mutation {
-        createBlog(title: String, filter: String, day, subtxt: String, fulltxt: String ): Message
-        updateBlog(title: String, filter: String, day, subtxt: String, fulltxt: String, abstractId: ID, articleId: ID ): Message
+        createBlog(title: String, filter: String, day: String, subtxt: String, fulltxt: String ): Message
+        updateBlog(title: String, filter: String, day: String, subtxt: String, fulltxt: String, abstractId: ID, articleId: ID ): Message
         deleteBlog(abstractId: ID, articleId: ID ): Message
     }
 `
-
