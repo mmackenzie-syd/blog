@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const asyncHandler = require('express-async-handler');
 const calculateSortIndex = require("../utilities/calculateSortIndex");
 
 const Article = require('../models/Article.js');

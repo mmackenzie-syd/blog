@@ -1,8 +1,8 @@
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const { ApolloServer, AuthenticationError } = require("apollo-server");
+const { ApolloServer, AuthenticationError, gql } = require("apollo-server");
 require("dotenv").config();
+
+const Article = require('./models/Article.js');
+const Abstract = require('./models/Abstract.js');
 
 /* Mongoose connection */
 const mongoose = require('mongoose');
@@ -13,34 +13,25 @@ db.once('open', function() {
     console.log('database connected');
 });
 
-/* Expressjs */
-const generateToken = require("./authentication/generateToken");
-const app = express();
+const typeDefsString = require('./graph/typeDefsString');
+const resolvers = require("./graph/resolvers");
 
-app.use(cors());
-app.use(bodyParser.json()); // gives req.body
+const typeDefs = gql`${typeDefsString}`;
 
-app.use('/blog', blog);
-
-app.post('/login', function (req, res, next) {
-    const user = req.body.username;
-    const password = req.body.password;
-    if (user !== process.env.APP_USER) {
-        next('user not found');
-        return;
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    formatError: (error) => {
+        return error;
+    },
+    context: async ({ req }) => {
+        return {
+            Abstract,
+            Article
+        };
     }
-    if (password !== process.env.PASSWORD) {
-        next('incorrect password');
-        return
-    }
-    const token = generateToken(user);
-    res.status(200).json({ user, token });
 });
 
-app.get('/', (req, res) => {
-    res.send('blog api')
-})
-
-app.listen(3000, function () {
-    console.log('Listening on port 3000')
+server.listen().then(({ url }) => {
+    console.log(`Server listening on ${url}`);
 });
