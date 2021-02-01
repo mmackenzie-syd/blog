@@ -1,5 +1,9 @@
 # blog
 
+A 'MEVN' blog, ie. Mongo, Express, Vue and Node.
+
+Built by a developer for developers.
+
 ## Client Project setup
 ```
 npm install
