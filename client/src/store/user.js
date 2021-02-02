@@ -32,8 +32,10 @@ export default {
                 variables: payload
             })
             .then(({ data }) => {
+                const { token } = data.login;
+                localStorage.setItem('token', token);
                 commit('setAuthenticated', true);
-                commit('setToken', data.login);
+                commit('setToken', token);
                 commit('setLoading', -1);
             })
             .catch(error => {
@@ -43,7 +45,10 @@ export default {
             })
         },
         logout({ commit }) {
-            commit('setAuthenticated', false);
+            apolloClient.resetStore().then(() => {
+                localStorage.setItem('token', '');
+                commit('setAuthenticated', false);
+            });
         },
         reset({ commit }) {
             commit('setError', '');

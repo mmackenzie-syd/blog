@@ -7,7 +7,8 @@ const { articlesSeed, abstractsSeed } = require('../utilities/buildSeedData')(da
 
 module.exports = {
     Query: {
-        seed: async (_, args, {Abstract, Article}) => {
+        seed: async (_, args, {Abstract, Article, user}) => {
+            if (!user) return null;
             // Seed Database with default data
 
             // remove existing data
@@ -48,7 +49,8 @@ module.exports = {
         },
     },
     Mutation: {
-        createBlog: async (_, { title, filter, day, subtxt, fulltxt }, { Article, Abstract }) => {
+        createBlog: async (_, { title, filter, day, subtxt, fulltxt }, { Article, Abstract, user }) => {
+            if (!user) return null;
             const sortIndex = calculateSortIndex(filter, day);
             // save new article
             const createdArticle = new Article({ fulltxt });
@@ -62,7 +64,8 @@ module.exports = {
             return {txt: 'Successfully created blog'};
         },
         updateBlog: async (_, { title, filter, day, subtxt, fulltxt, abstractId, articleId },
-            { Article, Abstract }) => {
+            { Article, Abstract, user }) => {
+                if (!user) return null;
                 const sortIndex = calculateSortIndex(filter, day);
 
                 // delete existing article and abstract
@@ -81,7 +84,8 @@ module.exports = {
                 await createdAbstract.save();
                 return {txt: 'Successfully updated blog'};
         },
-        deleteBlog: async (_, { abstractId, articleId  }, { Abstract, Article }) => {
+        deleteBlog: async (_, { abstractId, articleId  }, { Abstract, Article, user }) => {
+            if (!user) return null;
             await Article.deleteOne({ _id: articleId });
             await Abstract.deleteOne({ _id: abstractId });
             return {txt: 'Successfully deleted blog'};

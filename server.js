@@ -1,5 +1,6 @@
-const { ApolloServer, AuthenticationError, gql } = require("apollo-server");
+const { ApolloServer, gql } = require("apollo-server");
 require("dotenv").config();
+const getUser = require("./authentication/getUser");
 
 const Article = require('./models/Article.js');
 const Abstract = require('./models/Abstract.js');
@@ -25,9 +26,12 @@ const server = new ApolloServer({
         return error;
     },
     context: async ({ req }) => {
+        const token = req.headers.authorization || '';
+        const user = await getUser(token);
         return {
             Abstract,
-            Article
+            Article,
+            user,
         };
     }
 });
