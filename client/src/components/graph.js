@@ -22,3 +22,11 @@ export const UPDATE_BLOG = gql`
             txt
         }
     }`;
+
+
+export const CREATE_BLOG = gql`
+    mutation createBlog($title: String, $filter: String, $day: String, $subtxt: String, $fulltxt: String) {
+        createBlog(title: $title, filter: $filter, day: $day, subtxt: $subtxt, fulltxt: $fulltxt) {
+            txt
+        }
+    }`;

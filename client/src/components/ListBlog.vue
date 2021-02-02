@@ -153,7 +153,6 @@ export default {
   },
   watch: {
     abstracts() {
-      console.log('abstracts', this.abstracts)
       this.loading = false;
       this.setData();
     },

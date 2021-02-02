@@ -51,10 +51,11 @@
 </template>
 
 <script>
-import Axios from "axios";
 import CalenderService from '../services/CalenderService';
 import {mapActions, mapState} from "vuex";
 import MonthsReverseNameService from "@/services/MonthsReverseNameService";
+import {defaultClient as apolloClient} from "@/main";
+import {CREATE_BLOG} from "@/components/graph";
 
 export default {
   name: 'EditBlog',
@@ -99,8 +100,6 @@ export default {
       this.form.days = CalenderService.getDays(this.form.selectedMonth, this.form.selectedYear);
     },
     onSubmit: async function() {
-      // use abstract id not article id
-      const url = `http://localhost:3000/blog/`;
       const {
         selectedMonth,
         selectedYear,
@@ -110,19 +109,21 @@ export default {
         title,
       } = this.form;
       const filter = selectedYear + '/' +  MonthsReverseNameService[selectedMonth];
-      try {
-        this.saving = true;
-        await Axios.post(
-            url,
-            { title, filter, day, subtxt, fulltxt },
-            { headers: { authorization: this.token} }
-        );
-        this.saving = false;
-        this.getAbstracts();
-        this.$router.go(-1);
-      } catch (error) {
-        console.error(error);
-      }
+
+      apolloClient.mutate({
+        mutation: CREATE_BLOG,
+        variables:{ title, filter, day, subtxt, fulltxt },
+      })
+      .then(() => {
+        apolloClient.resetStore().then(() => { // required to cause a data refetch
+          this.saving = false;
+          this.getAbstracts();
+          this.$router.go(-1);
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      });
     }
   },
 }
