@@ -49,7 +49,7 @@ module.exports = {
             return {token: generateToken(username), username};
         },
         contactMe: async (_, { email, subject, message }) => {
-            console.log('email', email, subject, message)
+            console.log('email contact: ', email, subject, message)
             // This is currently disabled in this app
             // If you would like to use this feature, re-enable and
             // use mailgun or other provider instead of gmail
