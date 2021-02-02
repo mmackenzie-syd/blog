@@ -7,3 +7,12 @@ export const DELETE_BLOG = gql`
             txt
         }
     }`;
+
+
+export const SEED = gql`
+    query {
+        seed {
+            txt
+        }
+    }`;
+

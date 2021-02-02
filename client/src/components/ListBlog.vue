@@ -8,7 +8,8 @@
           <h2 class="admin-title" ><small>ADMIN</small></h2>
         </div>
         <div class="btn-toolbar col-md-6">
-          <button class='btn btn-default pull-right' v-on:click="addBlog">Add Blog</button>
+          <button class='btn btn-default btn-fixed-width pull-right' v-on:click="addBlog">Add Blog</button>
+          <button class='btn btn-danger btn-fixed-width pull-right' v-on:click="onReset">Reset Blog</button>
         </div>
       </div>
       <br>
@@ -68,7 +69,7 @@
 
 import {mapActions, mapState} from "vuex";
 import { defaultClient as apolloClient } from "@/main";
-import { DELETE_BLOG } from "@/components/graph";
+import {DELETE_BLOG, SEED} from "@/components/graph";
 
 export default {
   name: 'ListBlog',
@@ -112,14 +113,14 @@ export default {
       }
     },
     //
-    onDelete: async function(abstractId, articleId) {
+    onDelete: function(abstractId, articleId) {
       this.saving = true;
       apolloClient.mutate({
         mutation: DELETE_BLOG,
         variables: { abstractId, articleId }
       })
       .then(() => {
-        this.$apolloProvider.defaultClient.resetStore().then(() => { // required to cause a data refetch
+        apolloClient.resetStore().then(() => { // required to cause a data refetch
           this.getAbstracts();
           this.saving = false;
         })
@@ -129,6 +130,22 @@ export default {
         this.saving = false;
       })
     },
+    onReset: function() {
+      this.saving = true;
+      apolloClient.query({
+        query: SEED,
+      })
+      .then(() => {
+        apolloClient.resetStore().then(() => { // required to cause a data refetch
+          this.getAbstracts();
+          this.saving = false;
+        })
+      })
+      .catch(error => {
+        console.error(error);
+        this.saving = false;
+      })
+    }
   },
   mounted() {
     console.log('this', this)
@@ -211,5 +228,8 @@ export default {
     border: 0;
     padding-top: 0;
     padding-bottom: 0;
+  }
+  .btn-fixed-width {
+    width: 100px;
   }
 </style>
