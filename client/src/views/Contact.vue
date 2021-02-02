@@ -4,22 +4,27 @@
       <div class="contact">
         <h2 class="contact-title"><small>CONTACT</small></h2>
         <br>
-        <div class="contact-alert">
-          <span class="contact-alert-closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-          <strong class="contact-alert-msg"></strong>
+        <div class="alert alert-danger alert-dismissible" v-if="error">
+          <span class="close" aria-label="close" v-on:click="onClose">&times;</span>
+          <strong>Error!</strong> An error occurred, please try again.
         </div>
-        <form>
+        <div class="alert alert-success alert-dismissible" v-if="sent">
+          <span class="close" aria-label="close" v-on:click="onClose">&times;</span>
+          <strong>Message Sent!</strong>
+        </div>
+        <div v-if="saving">Saving Changes...</div>
+        <form v-else role="form" @submit.prevent="onSubmit">
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" class="form-control" placeholder="Enter email" id="email">
+            <input type="email" class="form-control" placeholder="Enter email" id="email" v-model="email">
           </div>
           <div class="form-group">
             <label for="subj">Subject:</label>
-            <input type="text" class="form-control" placeholder="Enter subject" id="subj" >
+            <input type="text" class="form-control" placeholder="Enter subject" id="subj" v-model="subject">
           </div>
           <div class="form-group">
             <label>Message:</label>
-            <textarea rows="5" class="form-control" type="text"></textarea>
+            <textarea rows="5" class="form-control" type="text" v-model="message"></textarea>
           </div>
           <button type="submit" class="btn btn-default">Submit</button>
         </form>
@@ -29,11 +34,48 @@
 </template>
 
 <script>
+  import {defaultClient as apolloClient} from "@/main";
+  import { CONTACT_ME } from "@/views/graph";
 
-export default {
-  name: 'Contact',
-  components: {}
-}
+  export default {
+    name: 'Contact',
+    components: {},
+    data() {
+      return {
+        saving: false,
+        email: '',
+        subject: '',
+        message: '',
+        sent: false,
+        error: false
+      }
+    },
+    mounted: function () {},
+    methods: {
+      onSubmit: async function() {
+        const { email, subject, message } = this;
+        apolloClient.query({
+          query: CONTACT_ME,
+          variables:{ email, subject, message },
+        })
+        .then(() => {
+          this.email = '';
+          this.subject = '';
+          this.message = '';
+          this.saving = false;
+          this.sent = true;
+        })
+        .catch(err => {
+          console.log(err);
+          this.error = true;
+        });
+      },
+      onClose: function() {
+        this.sent = false;
+        this.error = false;
+      }
+    },
+  }
 </script>
 
 <style>

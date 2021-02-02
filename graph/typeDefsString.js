@@ -24,6 +24,7 @@ module.exports = `
         getAbstracts: [Abstract]
         getArticle(id: ID): Article
         login(username: String, password: String): User
+        contactMe(email: String, subject: String, message: String ): Message
     }
     type Mutation {
         createBlog(title: String, filter: String, day: String, subtxt: String, fulltxt: String ): Message

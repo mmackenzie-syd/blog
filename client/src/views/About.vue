@@ -9,7 +9,6 @@
           <p>The front-page styling and design, with <a href="https://masonry.desandro.com/" target="_blank">masonry</a> image packing and upside-down navigation, was based on the <a href="http://www.wix.com" target="_blank">www.wix.com</a> template: <a href="https://www.wix.com/demone2/graphic-design-portf" target="_blank">graphic-design-portf</a>. The remainder of the styling is Bootstrap 3, with flat-buttons and controls. Code syntax highlighting is with the <a href="http://prismjs.com" target="_blank">PrismJS</a> library using the default colour scheme.</p>
           <p>The blog template is currently populated with blogs created from the 1998 Netscape manual, 'Core Javascript Guide 1.4', which is can be viewed at <a href="https://docs.huihoo.com/javascript/CoreGuideJS14/index.html" target="_blank">CoreGuideJS14</a>.</p>
           <p>The code is available for download at: <a href="https://github.com/mmackenzie-syd/blog" target=_blank>https://github.com/mmackenzie-syd/blog</a></p>
-
         </div>
         <router-link class="btn btn-default about-contact" to="/contact">Contact Me</router-link>
       </div>

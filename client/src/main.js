@@ -13,17 +13,17 @@ export const defaultClient = new ApolloClient({
     fetchOptions: {
         credentials: 'include'
     },
-    request: operation => {
-        if (!localStorage.token) {
-            localStorage.setItem('token', '');
-        }
-
-        operation.setContext({
-            headers: {
-                authorization: localStorage.getItem('token')
-            }
-        });
-    },
+    // request: operation => {
+    //     if (!localStorage.token) {
+    //         localStorage.setItem('token', '');
+    //     }
+    //
+    //     operation.setContext({
+    //         headers: {
+    //             authorization: localStorage.getItem('token')
+    //         }
+    //     });
+    // },
     onError: ({ graphQLErrors, networkError }) => {
         if (networkError) {
             console.log('[networkError]', networkError);
