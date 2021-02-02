@@ -52,11 +52,12 @@
 </template>
 
 <script>
-  import Axios from "axios";
   import CalenderService from '../services/CalenderService';
   import {mapActions, mapState} from "vuex";
   import MonthsNameService from "@/services/MonthsNameService";
   import MonthsReverseNameService from "@/services/MonthsReverseNameService";
+  import {defaultClient as apolloClient} from "@/main";
+  import {UPDATE_BLOG} from "@/components/graph";
 
   export default {
     name: 'EditBlog',
@@ -126,31 +127,33 @@
         };
       },
       onSubmit: async function() {
-        // use abstract id not article id
-        const url = `http://localhost:3000/blog/${this.id}`;
         const {
           selectedMonth,
           selectedYear,
-          selectedDay: day,
+          selectedDay,
           subtxt,
           fulltxt,
           title,
         } = this.form;
         const filter = selectedYear + '/' +  MonthsReverseNameService[selectedMonth];
         const abstractId = this.abstract._id;
-        try {
-          this.saving = true;
-          await Axios.put(
-              url,
-              { title, filter, day, subtxt, fulltxt, abstractId },
-              { headers: { authorization: this.token} }
-          );
-          this.saving = false;
-          this.getAbstracts();
-          this.$router.go(-1);
-        } catch (error) {
-          console.error(error);
-        }
+        const articleId = this.id;
+        const day = selectedDay.toString();
+        this.saving = true;
+        apolloClient.mutate({
+          mutation: UPDATE_BLOG,
+          variables:{ title, filter, day, subtxt, fulltxt, abstractId, articleId },
+        })
+        .then(() => {
+          apolloClient.resetStore().then(() => { // required to cause a data refetch
+              this.saving = false;
+              this.getAbstracts();
+              this.$router.go(-1);
+          })
+        })
+        .catch(error => {
+          console.log(error)
+        });
       }
     },
     watch: {

@@ -17,7 +17,6 @@ export default {
     },
     mutations: {
         setAbstracts(state, abstracts) {
-            console.log('abstracts', abstracts)
             state.abstracts = abstracts;
             state.categories = PopulateCategoriesService(abstracts);
         },

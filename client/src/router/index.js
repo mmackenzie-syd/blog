@@ -58,7 +58,6 @@ const routes = [
     name: 'Admin',
     component: Admin,
     beforeEnter: (to, from, next) => {
-        console.log('st', )
         if (!store.state.user.authenticated) {
             next('/');
         }

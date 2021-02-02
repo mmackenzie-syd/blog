@@ -148,7 +148,6 @@ export default {
     }
   },
   mounted() {
-    console.log('this', this)
     this.loading = false;
     this.setData()
   },

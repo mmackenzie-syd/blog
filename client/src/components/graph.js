@@ -16,3 +16,9 @@ export const SEED = gql`
         }
     }`;
 
+export const UPDATE_BLOG = gql`
+    mutation updateBlog($title: String, $filter: String, $day: String, $subtxt: String, $fulltxt: String, $abstractId: ID, $articleId: ID) {
+        updateBlog(title: $title, filter: $filter, day: $day, subtxt: $subtxt, fulltxt: $fulltxt, abstractId: $abstractId, articleId: $articleId) {
+            txt
+        }
+    }`;
