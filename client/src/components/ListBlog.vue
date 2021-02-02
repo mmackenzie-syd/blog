@@ -67,7 +67,8 @@
 <script>
 
 import {mapActions, mapState} from "vuex";
-import Axios from "axios";
+import { defaultClient as apolloClient } from "@/main";
+import { DELETE_BLOG } from "@/components/graph";
 
 export default {
   name: 'ListBlog',
@@ -110,24 +111,33 @@ export default {
         this.$router.push({ path: `/admin/list/${nextPage}` });
       }
     },
+    //
     onDelete: async function(abstractId, articleId) {
-      const url = `http://localhost:3000/blog/${abstractId}/${articleId}`;
-      try {
-        this.saving = true;
-        await Axios.delete(url, { headers: { authorization: this.token} });
-        this.saving = false;
-        this.getAbstracts();
-      } catch (error) {
+      this.saving = true;
+      apolloClient.mutate({
+        mutation: DELETE_BLOG,
+        variables: { abstractId, articleId }
+      })
+      .then(() => {
+        this.$apolloProvider.defaultClient.resetStore().then(() => { // required to cause a data refetch
+          this.getAbstracts();
+          this.saving = false;
+        })
+      })
+      .catch(error => {
         console.error(error);
-      }
+        this.saving = false;
+      })
     },
   },
   mounted() {
+    console.log('this', this)
     this.loading = false;
     this.setData()
   },
   watch: {
     abstracts() {
+      console.log('abstracts', this.abstracts)
       this.loading = false;
       this.setData();
     },

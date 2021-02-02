@@ -35,7 +35,7 @@ export const defaultClient = new ApolloClient({
     }
 });
 
-const apolloProvider = new VueApollo({ defaultClient })
+export const apolloProvider = new VueApollo({ defaultClient })
 
 Vue.use(VueApollo);
 

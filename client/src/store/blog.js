@@ -39,7 +39,7 @@ export default {
         }
     },
     actions: {
-        getAbstracts({ commit }) {
+        getAbstracts: async function({ commit }) {
             commit('setLoading', 1);
             apolloClient.query({
                 query: GET_ABSTRACTS
