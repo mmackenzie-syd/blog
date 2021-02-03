@@ -1,6 +1,6 @@
 # blog
 
-A personal blog built using VueJS for developers.
+A personal blog template designed for use by software developers, using the latest front-end technologies.
 
 The client-side code was built with Vue, Vue Router, Vuex and Apollo Client. Search is handled client-side using [Lunr](https://lunrjs.com/).
 
