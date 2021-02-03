@@ -10,6 +10,7 @@ import ListBlog from '../components/ListBlog.vue';
 
 import store from '../store/index.js'
 import AddBlog from "@/components/AddBlog";
+import Search from "@/components/Search";
 
 Vue.use(VueRouter);
 
@@ -39,17 +40,21 @@ const routes = [
     component: () => import('../views/Login.vue')
   },
   {
-    path: '/blog/:month/:year',
+    path: '/blog',
     name: 'Blog',
     component: Blog,
     children: [
       {
-        path: 'article/:id',
+        path: ':month/:year/article/:id',
         component: Article
       },
       {
-        path: 'abstract/:page',
+        path: ':month/:year/abstract/:page',
         component: Abstract
+      },
+      {
+        path: 'search/:page',
+        component: Search
       }
     ]
   },

@@ -7,9 +7,9 @@
     </div>
     <div v-if="!filteredAbstracts">...Loading</div>
     <div v-else class="col-md-3 blog-aside">
-      <form>
+      <form @submit.prevent="onSearch">
         <div class="input-group blog-aside-search" >
-          <input id="search-box" type="text" class="form-control" placeholder="Search" name="search">
+          <input id="search-box" type="text" class="form-control" placeholder="Search" name="search" v-model="txt">
           <div class="input-group-btn">
             <button class="btn btn-default" type="submit">
               <i class="glyphicon glyphicon-search"></i>
@@ -21,7 +21,7 @@
       <div class="blog-recent-posts" v-bind:style="postsHeight">
         <div class="posts">
           <h4 style="text-transform: capitalize;">
-            {{$route.params.month}} {{$route.params.year}}
+            {{month}} {{year}}
           </h4>
           <h4 @click="openPosts" v-show="postsHide" class="openPosts"><i class="fa fa-chevron-circle-down"></i></h4>
           <h4 @click="openPosts" v-show="!postsHide" class="openPosts"><i class="fa fa-chevron-circle-up"></i></h4>
@@ -30,7 +30,7 @@
           <li
               v-for="(abstract, index) in filteredAbstracts"
               :key="abstract.title"
-              :class="[(Number($route.params.page) === (index + 1)) ? 'active' : '']"
+              :class="[getActiveClass(index)]"
           >
             <a>
               {{ abstract.title }}
@@ -74,6 +74,10 @@ export default {
       archiveHeight: { maxHeight: '210px' },
       postsHide: false,
       postsHeight: { maxHeight: '210px' },
+      txt: '',
+      filteredNav: [],
+      month: '',
+      year: ''
     }
   },
   computed: {
@@ -83,6 +87,13 @@ export default {
   },
   methods: {
     ...mapActions('blog', ['filterAbstracts']),
+    ...mapActions('blog', ['searchAbstracts']),
+    getActiveClass: function(index) {
+      if (this.$route.path.includes('/blog/search')) {
+        return '';
+      }
+      return (Number(this.$route.params.page) === (index + 1)) ? 'active' : ''
+    },
     extractMonth: function(x) {
       return '' + /[a-zA-Z]+/.exec(x);
     },
@@ -111,19 +122,39 @@ export default {
         this.archiveHide = true;
         this.archiveHeight = { maxHeight: '1000px' };
       }
+    },
+    onSearch: function(){
+      this.searchAbstracts(this.txt);
+      if (!this.$route.path.includes('/blog/search') ){
+        this.$router.push({ path: `/blog/search/1`});
+      }
     }
   },
   watch: {
     loading() {
       if (this.loading === 0) {
         const {month, year} = this.$route.params;
-        const filter = month + '/' + year;
+        if (!month || !year) {
+          this.month = 'posts';
+          this.year = 'all';
+        } else {
+          this.month = month;
+          this.year = year;
+        }
+        const filter = this.month + '/' + this.year;
         this.filterAbstracts(filter);
       }
     },
     $route() {
       const {month, year} = this.$route.params;
-      const filter = month + '/' + year;
+      if (!month || !year) {
+        this.month = 'posts';
+        this.year = 'all';
+      } else {
+        this.month = month;
+        this.year = year;
+      }
+      const filter = this.month + '/' + this.year;
       this.filterAbstracts(filter);
     }
   }
