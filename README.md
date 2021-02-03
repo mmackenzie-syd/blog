@@ -8,7 +8,7 @@ The server-side code uses MongoDB and Apollo Server. Authentication is with JWT.
 
 The front-page styling and design, with [Masonry](https://masonry.desandro.com/)  image packing and upside-down navigation, was based on the [www.wix.com](http://www.wix.com)  template: 
 
-  [graphic-design-portf](https://www.wix.com/demone2/graphic-design-portf). 
+> [graphic-design-portf](https://www.wix.com/demone2/graphic-design-portf). 
 
 The remainder of the styling is Bootstrap 3, with flat-buttons and controls. Code syntax highlighting is with the [PrismJS](http://prismjs.com) library using the default colour scheme.
           
