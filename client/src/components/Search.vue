@@ -93,6 +93,9 @@ export default {
     }
   },
   mounted() {
+    if (!this.searchedAbstracts) {
+      this.$router.go(-1);
+    }
     if (this.searchedAbstracts.length) {
       this.getSearchedAbstract(Number(this.$route.params.page) - 1);
       this.pages = this.searchedAbstracts.length;
