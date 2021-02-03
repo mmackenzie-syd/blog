@@ -2,7 +2,7 @@
 
 A personal blog built using Mongo, GraphQL (Apollo client/server), Vue and Node.
 
-The client-side code was built with Vue, Vue Router, Vuex and Apollo Client. Search is handled client-side using [https://lunrjs.com/](Lunr).
+The client-side code was built with Vue, Vue Router, Vuex and Apollo Client. Search is handled client-side using (https://lunrjs.com/)[Lunr].
 
 The server-side code uses MongoDB and Apollo Server. Authentication is with JWT. The site is hosted on an Amazon, AWS, EC2 Ubuntu instance with an Nginx server.
 
