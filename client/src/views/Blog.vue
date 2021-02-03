@@ -76,8 +76,8 @@ export default {
       postsHeight: { maxHeight: '210px' },
       txt: '',
       filteredNav: [],
-      month: '',
-      year: ''
+      month: 'posts',
+      year: 'all'
     }
   },
   computed: {
@@ -129,6 +129,9 @@ export default {
         this.$router.push({ path: `/blog/search/1`});
       }
     }
+  },
+  mounted() {
+    this.txt = '';
   },
   watch: {
     loading() {

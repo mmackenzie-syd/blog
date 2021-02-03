@@ -1,6 +1,13 @@
 <template>
   <div class="abstracts">
-    <div v-if="!hasResults">Search returned no results...</div>
+    <div v-if="!hasResults" >
+      <h2 class="article-title">
+        <small><a href="#" v-on:click="goBack"><span class="glyphicon glyphicon-menu-left" style="top: 3px"></span> Go Back</a></small>
+      </h2>
+      <div class="no-result-txt">
+        <h3 class="text-center">Search returned no results...</h3>
+      </div>
+    </div>
     <div v-else>
       <h2 class="abstracts-title"><small>SEARCH ({{pages}})</small></h2>
       <br>
@@ -73,11 +80,16 @@ export default {
     },
     onRead: function() {
       const id = this.abstract.articleId;
-      const {month, year} = this.$route.params;
-      this.$router.push({ path: `/blog/${month}/${year}/article/${id}`});
+      const x = this.abstract.filter;
+      const mo = '' + /[a-zA-Z]+/.exec(x);
+      const yr = '' + /^[0-9]+/.exec(x);
+      this.$router.push({ path: `/blog/${mo}/${yr}/article/${id}`});
     },
     highlight: function(txt) {
       return HighlightService(txt);
+    },
+    goBack: function() {
+      this.$router.go(-1);
     }
   },
   mounted() {
@@ -141,6 +153,9 @@ export default {
   /* position: relative;*/
   height: 240px; /* corresponds to 12 lines */
   overflow: hidden;
+}
+.no-result-txt {
+  margin-top: 150px;
 }
 /*
 .abstracts-subtxt:after {
