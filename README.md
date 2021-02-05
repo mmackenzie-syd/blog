@@ -12,6 +12,10 @@ The remainder of the styling is Bootstrap 3, with flat-buttons and controls. Cod
           
 The blog template is currently populated with blogs created from the 1998 Netscape manual, 'Core Javascript Guide 1.4', which is can be viewed at  [CoreGuideJS14](https://docs.huihoo.com/javascript/CoreGuideJS14/index.html).
 
+Mark Mackenzie
+
+February 2021
+
 ## Client Project setup 
 ```
 npm install
