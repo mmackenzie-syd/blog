@@ -32,9 +32,9 @@
               :key="abstract.title"
               :class="[getActiveClass(index)]"
           >
-            <a>
+            <router-link class="nav-link" :to="`/blog/${filter}/abstract/${index + 1}`" >
               {{ abstract.title }}
-            </a>
+            </router-link>
           </li>
         </ul>
       </div>
@@ -77,7 +77,8 @@ export default {
       txt: '',
       filteredNav: [],
       month: 'posts',
-      year: 'all'
+      year: 'all',
+      filter: 'posts/all'
     }
   },
   computed: {
@@ -144,8 +145,8 @@ export default {
           this.month = month;
           this.year = year;
         }
-        const filter = this.month + '/' + this.year;
-        this.filterAbstracts(filter);
+        this.filter = this.month + '/' + this.year;
+        this.filterAbstracts(this.filter);
       }
     },
     $route() {
@@ -157,8 +158,8 @@ export default {
         this.month = month;
         this.year = year;
       }
-      const filter = this.month + '/' + this.year;
-      this.filterAbstracts(filter);
+      this.filter = this.month + '/' + this.year;
+      this.filterAbstracts(this.filter);
     }
   }
 }
