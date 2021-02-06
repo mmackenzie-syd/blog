@@ -1,30 +1,353 @@
 const data = [
     {
-        title: 'Details of the Object Model',
+        title: 'Working with Objects',
         filter: '2017/jan',  // contains month and year
         day: '15',
-        subtxt: `<p>JavaScript is an object-based language based on prototypes, rather than being class-based. Because of this different basis, it can be less apparent how JavaScript allows you to create hierarchies of objects and to have inheritance of properties and their values. This post and subsequent posts attempts to clarify the situation.</p><p>This chapter assumes that you are already somewhat familiar with JavaScript and that you have used JavaScript functions to create simple objects.</p>`,
-        fulltxt: `<p>JavaScript is an object-based language based on prototypes, rather than being class-based. 
-                Because of this different basis, it can be less apparent how JavaScript allows you to create hierarchies 
-                of objects and to have inheritance of properties and their values. This post and subsequent posts attempts to clarify the situation.</p>
-                <p>This chapter assumes that you are already somewhat familiar with JavaScript and that you have used JavaScript functions to create simple objects.</p>`,
+        subtxt: `<p>JavaScript is designed on a simple object-based paradigm. An object is a construct with properties that are JavaScript variables or other objects. An object also has functions associated with it that are known as the object's methods. In addition to objects that are predefined in the Navigator client and the server, you can define your own objects.</p>
+<p>This post describes how to use objects, properties, functions, and methods, and how to create your own objects.</p>
+<p>This post contains the following sections:</p>
+<ul>
+<li>Objects and Properties</li>
+<li>Creating New Objects</li>
+</ul>`,
+        fulltxt: `<h3>Objects and Properties</h3>
+<p>A JavaScript object has properties associated with it. You access the properties of an object with a simple notation:</p>
+[codejs]
+objectName.propertyName
+[/codejs]
+<p>Both the object name and property name are case sensitive. You define a property by assigning it a value. For example, suppose there is an object named myCar (for now, just assume the object already exists). You can give it properties named make, model, and year as follows:</p>
+[codejs]
+myCar.make = "Ford"
+myCar.model = "Mustang"
+myCar.year = 1969;
+[/codejs]
+<p>An array is an ordered set of values associated with a single variable name. Properties and arrays in JavaScript are intimately related; in fact, they are different interfaces to the same data structure. So, for example, you could access the properties of the myCar object as follows:</p>
+[codejs]
+myCar["make"] = "Ford"
+myCar["model"] = "Mustang"
+myCar["year"] = 1967
+[/codejs]
+<p>This type of array is known as an associative array, because each index element is also associated with a string value. To illustrate how this works, the following function displays the properties of the object when you pass the object and the object's name as arguments to the function:</p>
+[codejs]
+function show_props(obj, obj_name) {
+   var result = ""
+   for (var i in obj)
+      result += obj_name + "." + i + " = " + obj[i] + "\\n"
+   return result
+}
+[/codejs]
+<p>So, the function call show_props(myCar, "myCar") would return the following:</p>
+[codejs]
+myCar.make = Ford
+myCar.model = Mustang
+myCar.year = 1967
+[/codejs]
+<h3>Creating New Objects</h3>
+<p>JavaScript has a number of predefined objects. In addition, you can create your own objects. In JavaScript 1.2, you can create an object using an object initializer. Alternatively, you can first create a constructor function and then instantiate an object using that function and the new operator.</p>
+<h4>Using Object Initializers</h4>
+<p>In addition to creating objects using a constructor function, you can create objects using an object initializer. Using object initializers is sometimes referred to as creating objects with literal notation. "Object initializer" is consistent with the terminology used by C++.</p>
+<p>The syntax for an object using an object initializer is:</p>
+[codejs]
+objectName = {property1:value1, property2:value2,..., propertyN:valueN}
+[/codejs]
+<p>where objectName is the name of the new object, each propertyI is an identifier (either a name, a number, or a string literal), and each valueI is an expression whose value is assigned to the propertyI. The objectName and assignment is optional. If you do not need to refer to this object elsewhere, you do not need to assign it to a variable.</p>
+<p>If an object is created with an object initializer in a top-level script, JavaScript interprets the object each time it evaluates the expression containing the object literal. In addition, an initializer used in a function is created each time the function is called.</p>
+<p>The following statement creates an object and assigns it to the variable x if and only if the expression cond is true.</p>
+[codejs]
+if (cond) x = {hi:"there"}
+[/codejs]
+<p>The following example creates myHonda with three properties. Note that the engine property is also an object with its own properties.</p>
+[codejs]
+myHonda = {color:"red",wheels:4,engine:{cylinders:4,size:2.2}}
+[/codejs]
+<p>You can also use object initializers to create arrays.</p>
+<h4>Using a Constructor Function</h4>
+<p>Alternatively, you can create an object with these two steps:</p>
+<ol>
+<li>Define the object type by writing a constructor function.</li>
+<li>Create an instance of the object with new.</li>
+</ol>
+<p>To define an object type, create a function for the object type that specifies its name, properties, and methods. For example, suppose you want to create an object type for cars. You want this type of object to be called car, and you want it to have properties for make, model, year, and color. To do this, you would write the following function:</p>
+[codejs]
+function car(make, model, year) {
+   this.make = make
+   this.model = model
+   this.year = year
+}
+[/codejs]
+<p>Notice the use of this to assign values to the object's properties based on the values passed to the function.</p>
+<p>Now you can create an object called mycar as follows:
+[codejs]
+mycar = new car("Eagle", "Talon TSi", 1993)
+[/codejs]
+<p>This statement creates mycar and assigns it the specified values for its properties. Then the value of mycar.make is the string "Eagle", mycar.year is the integer 1993, and so on.</p>
+<p>You can create any number of car objects by calls to new. For example,</p>
+[codejs]
+kenscar = new car("Nissan", "300ZX", 1992)
+vpgscar = new car("Mazda", "Miata", 1990)
+[/codejs]
+<p>An object can have a property that is itself another object. For example, suppose you define an object called person as follows:</p>
+[codejs]
+function person(name, age, sex) {
+   this.name = name
+   this.age = age
+   this.sex = sex
+}
+[/codejs]
+<p>and then instantiate two new person objects as follows:</p>
+[codejs]
+rand = new person("Rand McKinnon", 33, "M")
+ken = new person("Ken Jones", 39, "M")
+[/codejs]
+<p>Then you can rewrite the definition of car to include an owner property that takes a person object, as follows:</p>
+[codejs]
+function car(make, model, year, owner) {
+   this.make = make
+   this.model = model
+   this.year = year
+   this.owner = owner
+}
+[/codejs]
+<p>To instantiate the new objects, you then use the following:</p>
+[codejs]
+car1 = new car("Eagle", "Talon TSi", 1993, rand)
+car2 = new car("Nissan", "300ZX", 1992, ken)
+[/codejs]
+<p>Notice that instead of passing a literal string or integer value when creating the new objects, the above statements pass the objects rand and ken as the arguments for the owners. Then if you want to find out the name of the owner of car2, you can access the following property:</p>
+[codejs]
+car2.owner.name
+[/codejs]
+<p>Note that you can always add a property to a previously defined object. For example, the statement</p>
+[codejs]
+car1.color = "black"
+[/codejs]
+<p>adds a property color to car1, and assigns it a value of "black." However, this does not affect any other objects. To add the new property to all objects of the same type, you have to add the property to the definition of the car object type.</p>
+<h4>Indexing Object Properties</h4>
+<p>In JavaScript 1.0, you can refer to an object's properties by their property name or by their ordinal index. In JavaScript 1.1 or later, however, if you initially define a property by its name, you must always refer to it by its name, and if you initially define a property by an index, you must always refer to it by its index.</p>
+<p>This applies when you create an object and its properties with a constructor function, as in the above example of the Car object type, and when you define individual properties explicitly (for example, myCar.color = "red"). So if you define object properties initially with an index, such as myCar[5] = "25 mpg", you can subsequently refer to the property as myCar[5].</p>
+<p>The exception to this rule is objects reflected from HTML, such as the forms array. You can always refer to objects in these arrays by either their ordinal number (based on where they appear in the document) or their name (if defined). For example, if the second <FORM> tag in a document has a NAME attribute of "myForm", you can refer to the form as document.forms[1] or document.forms["myForm"] or document.myForm.</p>
+<h4>Defining Properties for an Object Type</h4>
+<p>You can add a property to a previously defined object type by using the prototype property. This defines a property that is shared by all objects of the specified type, rather than by just one instance of the object. The following code adds a color property to all objects of type car, and then assigns a value to the color property of the object car1.</p>
+[codejs]
+Car.prototype.color=null
+car1.color="black"
+[/codejs]
+<h4>Defining Methods</h4>
+<p>A <i>method</i> is a function associated with an object. You define a method the same way you define a standard function. Then you use the following syntax to associate the function with an existing object:</p>
+[codejs]
+object.methodname = function_name
+[/codejs]
+<p>where object is an existing object, methodname is the name you are assigning to the method, and function_name is the name of the function.</p>
+<p>You can then call the method in the context of the object as follows:</p>
+object.methodname(params);
+<p>You can define methods for an object type by including a method definition in the object constructor function. For example, you could define a function that would format and display the properties of the previously-defined car objects; for example,
+[codejs]
+function displayCar() {
+   var result = "A Beautiful " + this.year + " " + this.make 
+      + " " + this.model
+   pretty_print(result)
+}
+[/codejs]
+<p>where pretty_print is function to display a horizontal rule and a string. Notice the use of this to refer to the object to which the method belongs.</p>
+<p>You can make this function a method of car by adding the statement</p>
+[codejs]
+this.displayCar = displayCar;
+[/codejs]
+<p>to the object definition. So, the full definition of car would now look like</p>
+[codejs]
+function car(make, model, year, owner) {
+   this.make = make
+   this.model = model
+   this.year = year
+   this.owner = owner
+   this.displayCar = displayCar
+}
+[/codejs]
+<p>Then you can call the displayCar method for each of the objects as follows:</p>
+[codejs]
+car1.displayCar()
+car2.displayCar()
+[/codejs]
+<h4>Using this for Object References</h4>
+<p>JavaScript has a special keyword, this, that you can use within a method to refer to the current object. For example, suppose you have a function called validate that validates an object's value property, given the object and the high and low values:</p>
+[codejs]
+function validate(obj, lowval, hival) {
+   if ((obj.value < lowval) || (obj.value > hival))
+      alert("Invalid Value!")
+}
+[/codejs]
+<p>Then, you could call validate in each form element's onChange event handler, using this to pass it the form element, as in the following example:</p>
+[code]
+<INPUT TYPE="text" NAME="age" SIZE=3 onChange="validate(this, 18, 99)">
+[/code]
+<p>In general, this refers to the calling object in a method.</p>
+<p>When combined with the form property, this can refer to the current object's parent form. In the following example, the form myForm contains a Text object and a button. When the user clicks the button, the value of the Text object is set to the form's name. The button's onClick event handler uses this.form to refer to the parent form, myForm.</p>
+[code]
+<FORM NAME="myForm">
+Form name:<INPUT TYPE="text" NAME="text1" VALUE="Beluga">
+<P>
+<INPUT NAME="button1" TYPE="button" VALUE="Show Form Name" onClick="this.form.text1.value=this.form.name">
+</FORM>
+[/code]
+<h4>Deleting Objects</h4>
+<p>You can remove an object by using the delete operator. The following code shows how to remove an object.</p>
+[codejs]
+myobj=new Number()
+delete myobj   // removes the object and returns true
+[/codejs]`,
     },
     {
-        title: 'Values, Variables, and Literals',
+        title: 'Literals',
         filter: '2017/jan',  // contains month and year
         day: '20',
-        subtxt: `<p>This post discusses values that JavaScript recognizes and describes the fundamental building blocks of JavaScript expressions: variables and literals.</p><p>This post contains the following sections:</p><ul><li>Values</li><li>Variables</li><li>Literals</li><li>Unicode</li></ul>`,
-        fulltxt: `<p>JavaScript supports a compact set of statements that you can use to incorporate a great deal of interactivity 
-                 in Web pages. This post provides an overview of the Conditional statements.</p>
-                 <p>A conditional statement is a set of commands that executes if a specified condition is true. JavaScript supports 
-                 two conditional statements: if...else and switch.</p>`,
+        subtxt: `<p>You use literals to represent values in JavaScript. These are fixed values, not variables, that you literally provide in your script. 
+This section describes the following types of literals:</p><ul><li>Array Literals</li><li>Boolean Literals</li><li>Floating-Point Literals</li><li>Integers</li><li>Object Literals</li><li>String Literals</li></ul>`,
+        fulltxt: `<h3>Array Literals</h3>
+<p>An array literal is a list of zero or more expressions, each of which represents an array element, enclosed in square brackets ([]). When you create an array using an array literal, it is initialized with the specified values as its elements, and its length is set to the number of arguments specified.</p>
+<p>The following example creates the coffees array with three elements and a length of three:</p>
+[codejs]
+coffees = ["French Roast", "Columbian", "Kona"]
+[/codejs]
+<p><strong>NOTE:</strong>An array literal is a type of object initializer.</p>
+<p>If an array is created using a literal in a top-level script, JavaScript interprets the array each time it evaluates the expression containing the array literal. In addition, a literal used in a function is created each time the function is called.</p>
+<p>Array literals are also Array objects. See "Array Object" on page 101 for details on Array objects.</p>
+<h4>Extra Commas in Array Literals</h4>
+<p>You do not have to specify all elements in an array literal. If you put two commas in a row, the array is created with spaces for the unspecified elements. The following example creates the fish array:</p>
+[codejs]
+fish = ["Lion", , "Angel"]
+[/codejs]
+<p>This array has two elements with values and one empty element (fish[0] is "Lion", fish[1] is undefined, and fish[2] is "Angel"):</p>
+<p>If you include a trailing comma at the end of the list of elements, the comma is ignored. In the following example, the length of the array is three. There is no myList[3]. All other commas in the list indicate a new element.</p>
+[codejs]
+myList = ['home', , 'school', ];
+[/codejs]
+<p>In the following example, the length of the array is four, and myList[0] is missing.</p>
+[codejs]
+myList = [ , 'home', , 'school'];
+[/codejs]
+<p>In the following example, the length of the array is four, and myList[3] is missing. Only the last comma is ignored. This trailing comma is optional.</p>
+[codejs]
+myList = ['home', , 'school', , ];
+[/codejs]
+<h3>Boolean Literals</h3>
+<p>The Boolean type has two literal values: true and false.</p>
+<p>Do not confuse the primitive Boolean values true and false with the true and false values of the Boolean object. The Boolean object is a wrapper around the primitive Boolean data type. See "Boolean Object" on page 104 for more information.</p>
+<h3>Floating-Point Literals</h3>
+<p>A floating-point literal can have the following parts:</p>
+<ul>
+<li>A decimal integer</li>
+<li>A decimal point (".")</li>
+<li>A fraction (another decimal number)</li>
+<li>An exponent</li>
+</ul>
+<p>The exponent part is an "e" or "E" followed by an integer, which can be signed (preceded by "+" or "-"). A floating-point literal must have at least one digit and either a decimal point or "e" (or "E").</p>
+<p>Some examples of floating-point literals are 3.1415, -3.1E12, .1e12, and 2E-12</p>
+<h3>Integers</h3>
+<p>Integers can be expressed in decimal (base 10), hexadecimal (base 16), and octal (base 8). A decimal integer literal consists of a sequence of digits without a leading 0 (zero). A leading 0 (zero) on an integer literal indicates it is in octal; a leading 0x (or 0X) indicates hexadecimal. Hexadecimal integers can include digits (0-9) and the letters a-f and A-F. Octal integers can include only the digits 0-7.</p>
+<p>Some examples of integer literals are: 42, 0xFFF, and -345.</p>
+<h3>Object Literals</h3>
+<p>An object literal is a list of zero or more pairs of property names and associated values of an object, enclosed in curly braces ({}). You should not use an object literal at the beginning of a statement. This will lead to an error.</p>
+<p>The following is an example of an object literal. The first element of the car object defines a property, myCar; the second element, the getCar property, invokes a function (Cars("honda")); the third element, the special property, uses an existing variable (Sales).</p>
+[codejs]
+var Sales = "Toyota";
+function CarTypes(name) {
+   if(name == "Honda")
+      return name;
+   else
+      return "Sorry, we don't sell " + name + ".";
+}
+car = {myCar: "Saturn", getCar: CarTypes("Honda"), special: Sales}
+document.write(car.myCar); // Saturn
+document.write(car.getCar); // Honda
+document.write(car.special); // Toyota
+[/codejs]
+<p>Additionally, you can use an index for the object, the index property (for example, 7), or nest an object inside another. The following example uses these options. These features, however, may not be supported by other ECMA-compliant browsers.</p>
+[codejs]
+car = {manyCars: {a: "Saab", b: "Jeep"}, 7: "Mazda"}
+document.write(car.manyCars.b); // Jeep
+document.write(car[7]); // Mazda
+[/codejs]
+<h3>String Literals</h3>
+<p>A string literal is zero or more characters enclosed in double (") or single (') quotation marks. A string must be delimited by quotation marks of the same type; that is, either both single quotation marks or both double quotation marks. The following are examples of string literals:</p>
+<ul>
+<li>"blah"</li>
+<li>'blah'</li>
+<li>"1234"</li>
+<li>"one line \\n another line"</li>
+</ul>
+<p>You can call any of the methods of the String object on a string literal value--JavaScript automatically converts the string literal to a temporary String object, calls the method, then discards the temporary String object. You can also use the String.length property with a string literal.</p>
+`,
     },
     {
         title: 'Conditional Statements',
         filter: '2016/jun',  // contains month and year
         day: '8',
         subtxt: `<p>JavaScript supports a compact set of statements that you can use to incorporate a great deal of interactivity in Web pages. This post provides an overview of the Conditional statements.</p><p>A conditional statement is a set of commands that executes if a specified condition is true. JavaScript supports two conditional statements: if...else and switch.</p>`,
-        fulltxt: ''
+        fulltxt: `
+<h3>if...else Statement</h3>
+<p>Use the if statement to perform certain statements if a logical condition is true; use the optional else clause to perform other statements if the condition is false. An if statement looks as follows:</p>
+[codejs]
+if (condition) {
+   statements1 
+}
+[else {
+   statements2 
+} ]
+[/codejs]
+<p>The condition can be any JavaScript expression that evaluates to true or false. The statements to be executed can be any JavaScript statements, including further nested if statements. If you want to use more than one statement after an if or else statement, you must enclose the statements in curly braces, {}.
+Do not confuse the primitive Boolean values true and false with the true and false values of the Boolean object. Any object whose value is not undefined or null, including a Boolean object whose value is false, evaluates to true when passed to a conditional statement. For example:</p>
+[codejs]
+var b = new Boolean(false);
+if (b) // this condition evaluates to true
+[/codejs]
+<p><strong>Example.</strong>In the following example, the function checkData returns true if the number of characters in a Text object is three; otherwise, it displays an alert and returns false.</p>
+[codejs]
+function checkData () {
+   if (document.form1.threeChar.value.length == 3) {
+      return true
+   } else {
+      alert("Enter exactly three characters. " +       
+      document.form1.threeChar.value + " is not valid.")
+      return false
+   }
+}
+[/codejs]
+<h3>switch Statement</h3>
+<p>A switch statement allows a program to evaluate an expression and attempt to match the expression's value to a case label. If a match is found, the program executes the associated statement. A switch statement looks as follows:</p>
+[codejs]
+switch (expression){
+   case label : 
+      statement;
+      break;
+   case label : 
+      statement;
+      break;
+   ...
+   default : statement;
+}
+[/codejs]
+<p>The program first looks for a label matching the value of expression and then executes the associated statement. If no matching label is found, the program looks for the optional default statement, and if found, executes the associated statement. If no default statement is found, the program continues execution at the statement following the end of switch.
+The optional break statement associated with each case label ensures that the program breaks out of switch once the matched statement is executed and continues execution at the statement following switch. If break is omitted, the program continues execution at the next statement in the switch statement.</p>
+<p><strong>Example.</strong> In the following example, if expr evaluates to "Bananas", the program matches the value with case "Bananas" and executes the associated statement. When break is encountered, the program terminates switch and executes the statement following switch. If break were omitted, the statement for case "Cherries" would also be executed.</p>
+[codejs]
+switch (expr) {
+   case "Oranges" : 
+      document.write("Oranges are $0.59 a pound.<BR>"); 
+      break; 
+   case "Apples" :
+      document.write("Apples are $0.32 a pound.<BR>");
+      break;
+   case "Bananas" : 
+      document.write("Bananas are $0.48 a pound.<BR>"); 
+      break; 
+   case "Cherries" :
+      document.write("Cherries are $3.00 a pound.<BR>");
+      break; 
+   default :
+      document.write("Sorry, we are out of " + i + ".<BR>"); 
+}
+document.write("Is there anything else you'd like?<BR>");
+[/codejs]`
     },
     {
         title: 'Loop Statements',
