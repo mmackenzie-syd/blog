@@ -1,4 +1,6 @@
-const { ApolloServer, gql } = require("apollo-server");
+const express = require('express');
+
+const { ApolloServer, gql } = require("apollo-server-express");
 require("dotenv").config();
 const getUser = require("./authentication/getUser");
 
@@ -50,6 +52,12 @@ const server = new ApolloServer({
     }
 });
 
-server.listen().then(({ url }) => {
-    console.log(`Server listening on ${url}`);
+const app = express();
+
+app.use(express.static('www'));
+
+server.applyMiddleware({ app });
+
+app.listen({ port: 4000 }, () => {
+    console.log(`Server listening on port 4000`);
 });
