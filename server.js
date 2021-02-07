@@ -1,4 +1,5 @@
 const express = require('express');
+var history = require('connect-history-api-fallback');
 
 const { ApolloServer, gql } = require("apollo-server-express");
 require("dotenv").config();
@@ -53,7 +54,7 @@ const server = new ApolloServer({
 });
 
 const app = express();
-
+app.use(history());
 app.use(express.static('www'));
 app.get('/api', (req, res) => res.send('welcome'));
 
