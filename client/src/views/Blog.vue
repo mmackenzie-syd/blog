@@ -23,8 +23,10 @@
           <h4 style="text-transform: capitalize;">
             {{month}} {{year}}
           </h4>
+          <div v-show="filteredAbstracts.length > 4">
           <h4 @click="openPosts" v-show="!postsHide" class="openPosts"><i class="fa fa-chevron-circle-down"></i></h4>
           <h4 @click="openPosts" v-show="postsHide" class="openPosts"><i class="fa fa-chevron-circle-up"></i></h4>
+          </div>
         </div>
         <ul class="nav nav-pills nav-stacked">
           <li
