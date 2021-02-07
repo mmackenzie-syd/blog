@@ -55,6 +55,7 @@ const server = new ApolloServer({
 const app = express();
 
 app.use(express.static('www'));
+app.get('/api', (req, res) => res.send('welcome'));
 
 server.applyMiddleware({ app });
 
