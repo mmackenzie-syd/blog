@@ -1,7 +1,7 @@
 const data = [
     {
         title: 'Exception Handling Statements',
-        filter: '2019/jan',  // contains month and year
+        filter: '2020/oct',  // contains month and year
         day: '7',
         subtxt: `<p>JavaScript supports a compact set of statements that you can use to incorporate a great deal of interactivity in Web pages. This post provides an overview of the Exception handling statements.</p>
         <p>You can throw and catch exceptions using the throw and try...catch statements.</p>`,
@@ -88,8 +88,8 @@ finally {
     },
     {
         title: 'Object Manipulation Statements',
-        filter: '2019/jan',  // contains month and year
-        day: '11',
+        filter: '2019/jun',  // contains month and year
+        day: '6',
         subtxt: `JavaScript supports a compact set of statements that you can use to incorporate a great deal of interactivity in Web pages. This post provides an overview of the Object manipulation statements.
         JavaScript uses the for...in and with statements to manipulate objects.`,
         fulltxt: `<h3>for...in Statement</h3>
@@ -136,7 +136,7 @@ with (Math) {
     },
     {
         title: 'Variables',
-        filter: '2017/jan',  // contains month and year
+        filter: '2019/jun',  // contains month and year
         day: '14',
         subtxt: `<p>You use variables as symbolic names for values in your application. You give variables names by which you refer to them and which must conform to certain rules.</p>
 <p>A JavaScript identifier, or name, must start with a letter or underscore ("_"); subsequent characters can also be digits (0-9). Because JavaScript is case sensitive, letters include the characters "A" through "Z" (uppercase) and the characters "a" through "z" (lowercase).</p>
@@ -191,7 +191,7 @@ n * 32 //returns 0
     },
     {
         title: 'Working with Objects',
-        filter: '2017/jan',  // contains month and year
+        filter: '2019/jun',  // contains month and year
         day: '15',
         subtxt: `<p>JavaScript is designed on a simple object-based paradigm. An object is a construct with properties that are JavaScript variables or other objects. An object also has functions associated with it that are known as the object's methods. In addition to objects that are predefined in the Navigator client and the server, you can define your own objects.</p>
 <p>This post describes how to use objects, properties, functions, and methods, and how to create your own objects.</p>
@@ -388,7 +388,7 @@ delete myobj   // removes the object and returns true
     },
     {
         title: 'Literals',
-        filter: '2017/jan',  // contains month and year
+        filter: '2018/feb',  // contains month and year
         day: '20',
         subtxt: `<p>You use literals to represent values in JavaScript. These are fixed values, not variables, that you literally provide in your script. 
 This section describes the following types of literals:</p><ul><li>Array Literals</li><li>Boolean Literals</li><li>Floating-Point Literals</li><li>Integers</li><li>Object Literals</li><li>String Literals</li></ul>`,
@@ -470,8 +470,8 @@ document.write(car[7]); // Mazda
     },
     {
         title: 'Conditional Statements',
-        filter: '2016/jun',  // contains month and year
-        day: '8',
+        filter: '2018/feb',  // contains month and year
+        day: '9',
         subtxt: `<p>JavaScript supports a compact set of statements that you can use to incorporate a great deal of interactivity in Web pages. This post provides an overview of the Conditional statements.</p><p>A conditional statement is a set of commands that executes if a specified condition is true. JavaScript supports two conditional statements: if...else and switch.</p>`,
         fulltxt: `
 <h3>if...else Statement</h3>
@@ -541,7 +541,7 @@ document.write("Is there anything else you'd like?<BR>");
     },
     {
         title: 'Loop Statements',
-        filter: '2015/mar',  // contains month and year
+        filter: '2016/mar',  // contains month and year
         day: '3',
         subtxt: `<p>JavaScript supports a compact set of statements that you can use to incorporate a great deal of interactivity in Web pages. This post provides an overview of the Loop statements.</p><p>A loop is a set of commands that executes repeatedly until a specified condition is met. JavaScript supports the for, do while, while, and label loop statements (label is not itself a looping statement, but is frequently used with these statements). In addition, you can use the break and continue statements within loop statements.</p><p>Another statement, for...in, executes statements repeatedly but is used for object manipulation. </p>`,
         fulltxt: `<h3>for Statement</h3>
@@ -589,8 +589,8 @@ function howMany(selectObject) {
     },
     {
         title: 'Defining Functions',
-        filter: '2017/mar',  // contains month and year
-        day: '3',
+        filter: '2015/aug',  // contains month and year
+        day: '21',
         subtxt: `<p>A function definition consists of the function keyword, followed by:</p><ul><li>The name of the function.</li><li>A list of arguments to the function, enclosed in parentheses and separated by commas.</li><li>The JavaScript statements that define the function, enclosed in curly braces, { }. The statements in a function can include calls to other functions defined in the current application.</li></ul><p>For example, the following code defines a simple function named square:</p>
 [codejs]
 function square(number) {
@@ -617,7 +617,7 @@ y=mycar.make     // returns Toyota (prop was changed by the function)
     },
     {
         title: 'Calling Functions',
-        filter: '2019/jan',  // contains month and year
+        filter: '2015/aug',  // contains month and year
         day: '15',
         subtxt: `<p>Defining a function does not execute it. Defining the function simply names the function and specifies what to do when the function is called. Calling the function actually performs the specified actions with the indicated parameters. For example, if you define the function square, you could call it as follows.</p>
 [codejs]
@@ -647,7 +647,7 @@ e=factorial(5) // returns 120
     },
     {
         title: 'Using the Arguments Array',
-        filter: '2019/feb',  // contains month and year
+        filter: '2020/oct',  // contains month and year
         day: '25',
         subtxt: `<p>The arguments of a function are maintained in an array. Within a function, you can address the parameters passed to it as follows:</p>
 [codejs]

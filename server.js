@@ -6,13 +6,27 @@ const Article = require('./models/Article.js');
 const Abstract = require('./models/Abstract.js');
 
 /* Mongoose connection */
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/blog', {useNewUrlParser: true, useUnifiedTopology: true});
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-    console.log('database connected');
-});
+const connectDB = async function() {
+    const mongoose = require('mongoose');
+    const user = process.env.APP_USER;
+    const password = process.env.PASSWORD;
+
+    try {
+        await mongoose.connect(`mongodb://localhost:27017/blog`, {
+            auth:{
+                user,
+                password
+            },
+            authSource:"admin",
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+        console.log('database connected');
+    } catch (error) {
+        console.log(error);
+    }
+}
+connectDB();
 
 const typeDefsString = require('./graph/typeDefsString');
 const resolvers = require("./graph/resolvers");
