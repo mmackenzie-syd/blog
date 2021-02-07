@@ -23,8 +23,8 @@
           <h4 style="text-transform: capitalize;">
             {{month}} {{year}}
           </h4>
-          <h4 @click="openPosts" v-show="postsHide" class="openPosts"><i class="fa fa-chevron-circle-down"></i></h4>
-          <h4 @click="openPosts" v-show="!postsHide" class="openPosts"><i class="fa fa-chevron-circle-up"></i></h4>
+          <h4 @click="openPosts" v-show="!postsHide" class="openPosts"><i class="fa fa-chevron-circle-down"></i></h4>
+          <h4 @click="openPosts" v-show="postsHide" class="openPosts"><i class="fa fa-chevron-circle-up"></i></h4>
         </div>
         <ul class="nav nav-pills nav-stacked">
           <li
@@ -45,8 +45,8 @@
       <div class="blog-archive-posts" v-bind:style="archiveHeight">
         <div class="archives">
           <h4>Archived Posts</h4>
-          <h4 @click="openArchives" v-show="archiveHide" class="openArchives"><i class="fa fa-chevron-circle-down"></i></h4>
-          <h4 @click="openArchives" v-show="!archiveHide" class="openArchives"><i class="fa fa-chevron-circle-up"></i></h4>
+          <h4 @click="openArchives" v-show="!archiveHide" class="openArchives"><i class="fa fa-chevron-circle-down"></i></h4>
+          <h4 @click="openArchives" v-show="archiveHide" class="openArchives"><i class="fa fa-chevron-circle-up"></i></h4>
         </div>
         <ul class="nav nav-pills nav-stacked">
           <li v-for="category in categories" :key="category.filter" :class="[$route.path.includes(category.filter) ? 'active' : '']">

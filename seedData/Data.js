@@ -1,5 +1,195 @@
 const data = [
     {
+        title: 'Exception Handling Statements',
+        filter: '2019/jan',  // contains month and year
+        day: '7',
+        subtxt: `<p>JavaScript supports a compact set of statements that you can use to incorporate a great deal of interactivity in Web pages. This post provides an overview of the Exception handling statements.</p>
+        <p>You can throw and catch exceptions using the throw and try...catch statements.</p>`,
+        fulltxt: `<h3>The throw Statement</h3>
+<p>Use the throw statement to throw an exception. When you throw an exception, you specify an expression containing the value of the exception:</p>
+[codejs]
+throw expression
+[/codejs]
+<p>The following code throws several exceptions.</p>
+[codejs]
+throw "Error2"    // generates an exception with a string value
+throw 42          // generates an exception with the value 42
+throw true        // generates an exception with the value true
+[/codejs]
+<p>You can specify an object when you throw an exception. You can then reference the object's properties in the catch block. The following example creates an object myUserException of type UserException and uses it in a throw statement.</p>
+[codejs]
+// Create an object type UserException
+function UserException (message) {
+   this.message=message
+   this.name="UserException"
+}
+// Create an instance of the object type and throw it
+myUserException=new UserException("Value too high")
+throw myUserException
+[/codejs]
+<h3>The try...catch Statement</h3>
+<p>The try...catch statement marks a block of statements to try, and specifies a response should an exception be thrown. If an exception is thrown, the try...catch statement catches it.</p>
+<p>The try...catch statement consists of a try block, which contains one or more statements, and a catch block, containing statements that specify what to do if an exception is thrown in the try block. That is, you want the try block to succeed, and if it does not succeed, you want control to pass to the catch block. If any statement within the try block (or in a function called from within the try block) throws an exception, control immediately shifts to the catch block. If no exception is thrown in the try block succeed, the catch block is skipped. The finally block executes after the try and catch blocks execute but before the statements following the try...catch statement.</p>
+<p>The following example uses a try...catch statement. The example calls a function that retrieves a month name from an array based on the value passed to the function. If the value does not correspond to a month number (1-12), an exception is thrown with the value "InvalidMonthNo" and the statements in the catch block set the monthName variable to "unknown".</p>
+[codejs]
+function getMonthName (mo) {
+   mo=mo-1 // Adjust month number for array index (1=Jan, 12=Dec)
+   var months=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul",
+      "Aug","Sep","Oct","Nov","Dec")
+   if (months[mo] != null) {
+      return months[mo]
+   } else {
+      throw "InvalidMonthNo"
+   }
+}
+try {
+   // statements to try
+   monthName=getMonthName(myMonth) // function could throw exception
+}
+catch (e) {
+   monthName="unknown"
+      logMyErrors(e) // pass exception object to error handler
+}
+[/codejs]
+<h4>The catch Block</h4>
+<p>Use the try...catch statement's catch block (recovery block) to execute error-handling code.</p>
+<p>A catch block looks as follows:</p>
+[codejs]
+catch (catchID) {
+   statements
+}
+[/codejs]
+<p>Every catch block specifies an identifier (catchID in the preceding syntax) that holds the value specified by the throw statement; you can use this identifier to get information about the exception that was thrown. JavaScript creates this identifier when the catch block is entered; the identifier lasts only for the duration of the catch block; after the catch block finishes executing, the identifier is no longer available.</p>
+<p>For example, the following code throws an exception. When the exception occurs, control transfers to the catch block.</p>
+[codejs]
+try {
+   throw "myException" // generates an exception
+}
+catch (e) {
+   // statements to handle any exceptions
+   logMyErrors(e) // pass exception object to error handler
+}
+[/codejs]
+<h4>The finally Block</h4>
+<p>The finally block contains statements to execute after the try and catch blocks execute but before the statements following the try...catch statement. The finally block executes whether or not an exception is thrown. If an exception is thrown, the statements in the finally block execute even if no catch block handles the exception.</p>
+<p>You can use the finally block to make your script fail gracefully when an exception occurs; for example, you may need to release a resource that your script has tied up. The following example opens a file and then executes statements that use the file (server-side JavaScript allows you to access files). If an exception is thrown while the file is open, the finally block closes the file before the script fails.</p>
+[codejs]
+try {
+   openMyFile()  // tie up a resource
+   writeMyFile(theData)
+}
+finally {
+   closeMyFile() // always close the resource
+}
+[/codejs]
+<h4>Nesting try...catch Statements</h4>
+<p>You can nest one or more try...catch statements. If an inner try...catch statement does not have a catch block, the enclosing try...catch statement's catch block is checked for a match.</p>
+`,
+    },
+    {
+        title: 'Object Manipulation Statements',
+        filter: '2019/jan',  // contains month and year
+        day: '11',
+        subtxt: `JavaScript supports a compact set of statements that you can use to incorporate a great deal of interactivity in Web pages. This post provides an overview of the Object manipulation statements.
+        JavaScript uses the for...in and with statements to manipulate objects.`,
+        fulltxt: `<h3>for...in Statement</h3>
+<p>The for...in statement iterates a specified variable over all the properties of an object. For each distinct property, JavaScript executes the specified statements. A for...in statement looks as follows:</p>
+[codejs]
+for (variable in object) {
+   statements }
+[/codejs]
+<p><strong>Example.</strong> The following function takes as its argument an object and the object's name. It then iterates over all the object's properties and returns a string that lists the property names and their values.</p>
+[codejs]
+function dump_props(obj, obj_name) {
+   var result = ""
+   for (var i in obj) {
+      result += obj_name + "." + i + " = " + obj[i] + "<BR>"
+   }
+   result += "<HR>"
+   return result
+}
+[/codejs]
+<p>For an object car with properties make and model, result would be:</p>
+[codejs]
+car.make = Ford
+car.model = Mustang
+[/codejs]
+<h3>with Statement</h3>
+<p>The with statement establishes the default object for a set of statements. JavaScript looks up any unqualified names within the set of statements to determine if the names are properties of the default object. If an unqualified name matches a property, then the property is used in the statement; otherwise, a local or global variable is used.</p>
+<p>A with statement looks as follows:</p>
+[codejs]
+with (object){
+   statements
+}
+[/codejs]
+<p><strong>Example.</strong> The following with statement specifies that the Math object is the default object. The statements following the with statement refer to the PI property and the cos and sin methods, without specifying an object. JavaScript assumes the Math object for these references.</p>
+[codejs]
+var a, x, y
+var r=10
+with (Math) {
+   a = PI * r * r
+   x = r * cos(PI)
+   y = r * sin(PI/2)
+}
+[/codejs]
+`,
+    },
+    {
+        title: 'Variables',
+        filter: '2017/jan',  // contains month and year
+        day: '14',
+        subtxt: `<p>You use variables as symbolic names for values in your application. You give variables names by which you refer to them and which must conform to certain rules.</p>
+<p>A JavaScript identifier, or name, must start with a letter or underscore ("_"); subsequent characters can also be digits (0-9). Because JavaScript is case sensitive, letters include the characters "A" through "Z" (uppercase) and the characters "a" through "z" (lowercase).</p>
+<p>Some examples of legal names are Number_hits, temp99, and _name.</p>`,
+        fulltxt: `<h3>Declaring Variables</h3>
+<p>You can declare a variable in two ways:</p>
+<ul>
+<li>By simply assigning it a value. For example, x = 42</li>
+<li>With the keyword var. For example, var x = 42</li>
+</ul>
+<h3>Evaluating Variables</h3>
+<p>A variable or array element that has not been assigned a value has the value undefined. The result of evaluating an unassigned variable depends on how it was declared:</p>
+<ul>
+<li>If the unassigned variable was declared without var, the evaluation results in a runtime error.</li>
+<li>If the unassigned variable was declared with var, the evaluation results in the undefined value, or NaN in numeric contexts.</li>
+</ul>
+<p>The following code demonstrates evaluating unassigned variables.</p>
+[codejs]
+function f1() {
+   return y - 2;
+}
+f1() //Causes runtime error
+function f2() {
+   return var y - 2;
+}
+f2() //returns NaN
+[/codejs]
+<p>You can use undefined to determine whether a variable has a value. In the following code, the variable input is not assigned a value, and the if statement evaluates to true.</p>
+[codejs]
+var input;
+if(input === undefined){
+   doThis();
+} else {
+   doThat();
+}
+[/codejs]
+<p>The undefined value behaves as false when used as a Boolean value. For example, the following code executes the function myFunction because the array element is not defined:</p>
+[codejs]
+myArray=new Array()
+if (!myArray[0])
+   myFunction()
+[/codejs]
+<p>When you evaluate a null variable, the null value behaves as 0 in numeric contexts and as false in Boolean contexts. For example:</p>
+[codejs]
+var n = null
+n * 32 //returns 0
+[/codejs]
+<h3>Variable Scope</h3>
+<p>When you set a variable identifier by assignment outside of a function, it is called a global variable, because it is available everywhere in the current document. When you declare a variable within a function, it is called a local variable, because it is available only within the function.</p>
+<p>Using var to declare a global variable is optional. However, you must use var to declare a variable inside a function.</p>
+<p>You can access global variables declared in one window or frame from another window or frame by specifying the window or frame name. For example, if a variable called phoneNumber is declared in a FRAMESET document, you can refer to this variable from a child frame as parent.phoneNumber.</p>`,
+    },
+    {
         title: 'Working with Objects',
         filter: '2017/jan',  // contains month and year
         day: '15',
