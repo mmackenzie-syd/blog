@@ -16,6 +16,18 @@ Mark Mackenzie
 
 February 2021
 
+![alt text](https://github.com/mmackenzie-syd/blog/blob/master/screenshots/grey/home.png)
+
+![alt text](https://github.com/mmackenzie-syd/blog/blob/master/screenshots/grey/blog.png)
+
+![alt text](https://github.com/mmackenzie-syd/blog/blob/master/screenshots/grey/article.png)
+
+![alt text](https://github.com/mmackenzie-syd/blog/blob/master/screenshots/grey/contact.png)
+
+![alt text](https://github.com/mmackenzie-syd/blog/blob/master/screenshots/grey/admin.png)
+
+![alt text](https://github.com/mmackenzie-syd/blog/blob/master/screenshots/grey/add.png)
+
 ## Client Project setup 
 ```
 npm install
