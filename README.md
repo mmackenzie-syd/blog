@@ -1,5 +1,7 @@
 # blog
 
+https://mark-syd.com/
+
 A personal blog template designed for use by software developers, built with Vue and GraphQL.
 
 The client-side code uses Vue Router, Vuex and Apollo Client. Search is handled client-side using [Lunr](https://lunrjs.com/). 
