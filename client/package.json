@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "apollo-boost": "^0.4.9",
+    "apollo-link-http": "^1.5.17",
     "core-js": "^3.6.5",
     "imagesloaded": "^4.1.4",
     "lodash": "^4.17.20",
