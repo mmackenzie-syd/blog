@@ -1,10 +1,12 @@
 # blog
 
-A personal blog template designed for use by software developers, using the latest front-end technologies.
+A personal blog template designed for use by software developers, built with Vue and GraphQL.
 
-The client-side code was built with Vue, Vue Router, Vuex and Apollo Client. Search is handled client-side using [Lunr](https://lunrjs.com/).
+The client-side code uses Vue Router, Vuex and Apollo Client. Search is handled client-side using [Lunr](https://lunrjs.com/). 
 
-The server-side code uses MongoDB and Apollo Server. Authentication is with JWT. The site is hosted on an Amazon, AWS, EC2 Ubuntu instance with an Nginx server.
+The server-side code uses MongoDB, Apollo Server and Express to launch the built Client-code from a static folder. Authentication is with JWT. 
+
+The site is hosted on an Amazon, AWS, EC2 Ubuntu instance with an Nginx server.
 
 The front-page styling and design, with [Masonry](https://masonry.desandro.com/)  image packing and upside-down navigation, was based on the [www.wix.com](http://www.wix.com)  template: [graphic-design-portf](https://www.wix.com/demone2/graphic-design-portf). 
 
@@ -23,6 +25,8 @@ February 2021
 ![alt text](https://github.com/mmackenzie-syd/blog/blob/master/screenshots/grey/article.png)
 
 ![alt text](https://github.com/mmackenzie-syd/blog/blob/master/screenshots/grey/contact.png)
+
+![alt text](https://github.com/mmackenzie-syd/blog/blob/master/screenshots/grey/login.png)
 
 ![alt text](https://github.com/mmackenzie-syd/blog/blob/master/screenshots/grey/admin.png)
 
