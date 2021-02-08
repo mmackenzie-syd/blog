@@ -54,15 +54,13 @@ const apollo = new ApolloServer({
     }
 });
 
-// Certificate
-// Dependencies
 const app = express();
-app.use(history());
-app.use(express.static('www'));
+app.use(history()); // this is required so that page refresh on the production env dont redirect to 404 error
+app.use(express.static('www')); // serves the Vue app in a production env. copy built vue app source code to the www folder.
 
 apollo.applyMiddleware({ app });
 
-// Starting both http & https servers
+// note does not work if use the node https server. SSL is handled by nginx, which redirects.
 const httpServer = http.createServer(app);
 
 httpServer.listen(4000, () => {

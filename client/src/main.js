@@ -7,14 +7,16 @@ import './assets/css/highlight.css'; // global styles
 
 import ApolloClient from 'apollo-boost';
 import VueApollo from 'vue-apollo';
-// import { createHttpLink } from 'apollo-link-http';
-//
 
 // re-set json token in local storage on app load
 localStorage.setItem('token', '');
 
+// const productionUri = 'https://mark-syd.com/graphql';
+
+const developmentUri = 'http://localhost:4000/graphql'
+
 export const defaultClient = new ApolloClient({
-    uri: 'https://mark-syd.com/graphql',
+    uri: developmentUri,
     fetchOptions: {
         credentials: 'include',
     },
