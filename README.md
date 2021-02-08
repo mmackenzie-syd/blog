@@ -2,11 +2,11 @@
 
 https://mark-syd.com/
 
-This app is designed as a personal blog built with Vue and GraphQL and hosted on AWS. The blogs are displayed as a list of short abstracts which can be opened into a full article. The app can create, read, update and delete, when logged in as an administrator.
+This app is designed as a personal blog built with Vue and GraphQL and hosted on AWS. The blogs are displayed as a list of short abstracts which can be opened into a full article. The app can create, read, update and delete a blog, when logged in as an administrator.
 
 The client-side code uses Vue Router and Vuex for state management. Apollo Client is used for handling the GraphQL. Search is handled client-side using the library package [Lunr](https://lunrjs.com/). 
 
-The server code uses MongoDB, Apollo Server and ExpressJS. The ExpressJS is to launch the Client-code from a static folder in a production environment. Authentication is with JWT. 
+The server code uses MongoDB, Apollo Server and ExpressJS. The ExpressJS runs simultaneously with the Apollo Server and is used to launch the Client-code from a static folder in a production environment. Authentication is with JSON web tokens. 
 
 The site is hosted on an Amazon, AWS, EC2 Ubuntu instance with an Nginx server.
 
