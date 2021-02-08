@@ -12,7 +12,7 @@ The site is hosted on an Amazon, AWS, EC2 Ubuntu instance with an Nginx server. 
 
 The front-page styling and design, with [Masonry](https://masonry.desandro.com/)  image packing and upside-down navigation, was based on the [www.wix.com](http://www.wix.com)  template: [graphic-design-portf](https://www.wix.com/demone2/graphic-design-portf). The choice of an upside-down navigation was intentional, as the app will eventually be upgraded to a PWA for use on mobile phones.
 
-The remainder of the styling is Bootstrap 3, with flat-buttons and controls. Code syntax highlighting is with the [PrismJS](http://prismjs.com) library using the default colour scheme.
+The remainder of the styling is [Bootstrap 3](https://getbootstrap.com/docs/3.3/), with flat-buttons and controls. Code syntax highlighting is with the [PrismJS](http://prismjs.com) library using the default colour scheme.
           
 The blog template is currently populated with blogs created from the 1998 Netscape manual, 'Core Javascript Guide 1.4', which is can be viewed at  [CoreGuideJS14](https://docs.huihoo.com/javascript/CoreGuideJS14/index.html).
 
