@@ -36,8 +36,6 @@ const resolvers = require("./graph/resolvers");
 
 const typeDefs = gql`${typeDefsString}`;
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
-
 const server = new ApolloServer({
     typeDefs,
     resolvers,

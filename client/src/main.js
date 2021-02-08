@@ -8,7 +8,7 @@ import './assets/css/highlight.css'; // global styles
 import ApolloClient from 'apollo-boost';
 import VueApollo from 'vue-apollo';
 // import { createHttpLink } from 'apollo-link-http';
-
+import https from 'https';
 
 // re-set json token in local storage on app load
 localStorage.setItem('token', '');
@@ -16,6 +16,7 @@ localStorage.setItem('token', '');
 export const defaultClient = new ApolloClient({
     uri: window.APP_URL,
     fetchOptions: {
+        agent: new https.Agent({ rejectUnauthorized: false }),
         credentials: 'include',
     },
     request: operation => {
