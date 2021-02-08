@@ -70,18 +70,18 @@
 // // });
 //
 
-let server;
-    if (environment === 'development') {
-        server = http.createServer(app);
-    } else {
-        console.log('called')
+// let server;
+//     if (environment === 'development') {
+//         server = http.createServer(app);
+//     } else {
+//         console.log('called')
         server = https.createServer(
             {
                 rejectUnauthorized: false
             },
             app
         )
-    }
+   // }
 
 server.listen({ port: 4000 }, () => {
     console.log(`Server listening on port 4000`);
