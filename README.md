@@ -8,7 +8,7 @@ The client-side code uses Vue Router and Vuex for state management. Apollo Clien
 
 The server code uses MongoDB, Apollo Server and ExpressJS. The ExpressJS runs simultaneously with the Apollo Server and is used to launch the Client-code from a static folder in a production environment. Authentication is with JSON web tokens. 
 
-The site is hosted on an Amazon, AWS, EC2 Ubuntu instance with an Nginx server. The Nginx server is configured as a reverse proxy to re-direct the in-coming traffic on Port 80 to the Node server running on Port 4000. A low-cost domain name was purchased from [bluehost](https://www.bluehost.com/) to enable SSL to be used. The SSL uses a certificate generated from Let's [Encrypt](https://letsencrypt.org/).
+The site is hosted on an Amazon, AWS, EC2 Ubuntu instance with an Nginx server. The Nginx server is configured as a reverse proxy to re-direct the in-coming traffic on Port 80 to the Node server running on Port 4000. A low-cost domain name was purchased from [bluehost](https://www.bluehost.com/) to enable SSL to be used. The SSL uses a certificate generated from [Let's Encrypt](https://letsencrypt.org/).
 
 The front-page styling and design, with [Masonry](https://masonry.desandro.com/)  image packing and upside-down navigation, was based on the [www.wix.com](http://www.wix.com)  template: [graphic-design-portf](https://www.wix.com/demone2/graphic-design-portf). 
 
