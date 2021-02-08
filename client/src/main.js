@@ -14,7 +14,7 @@ import VueApollo from 'vue-apollo';
 localStorage.setItem('token', '');
 
 export const defaultClient = new ApolloClient({
-    uri: 'https://localhost:4000/graphql',
+    uri: 'https://mark-syd.com/graphql',
     fetchOptions: {
         credentials: 'include',
     },
