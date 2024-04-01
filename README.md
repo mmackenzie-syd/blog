@@ -1,5 +1,27 @@
 # blog
 
+This app is designed as a personal blog built with Vue and GraphQL and hosted on AWS.
+
+## Second Edition:
+
+This website was originally built in February 2021 and was updated in March 2024. The updates were:
+
+1) The domain name was changed to:
+
+https://snapdragonxc.com
+
+which was purchased directly from AWS.
+
+2) The Nginx reverse proxy server was replaced with a Caddy reverse proxy server: 
+
+https://caddyserver.com/
+
+This allows for a very easy SSL certificate configuration.
+
+Due to the early version of Vuejs used, the code requires Node 16 LTS or earlier.
+
+## First Edition
+
 https://mark-syd.com/
 
 This app is designed as a personal blog built with Vue and GraphQL and hosted on AWS. The blogs are displayed as a list of short abstracts which can be opened into a full article. The app can create, read, update and delete a blog, when logged in as an administrator.
