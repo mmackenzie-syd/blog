@@ -8,8 +8,6 @@ https://snapdragonxc.com
 
 This website was originally built in February 2021 and was updated in March 2024 to replace the Nginx reverse proxy server with a Caddy reverse proxy server.
 
-## First Edition
-
 This app is designed as a personal blog built with Vue and GraphQL and hosted on AWS. The blogs are displayed as a list of short abstracts which can be opened into a full article. The app can create, read, update and delete a blog, when logged in as an administrator.
 
 The client-side code uses Vue Router and Vuex for state management. Apollo Client is used for handling the GraphQL. Search is handled client-side using the library package [Lunr](https://lunrjs.com/). 
