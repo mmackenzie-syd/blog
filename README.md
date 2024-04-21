@@ -2,8 +2,6 @@
 
 This app is designed as a personal blog built with Vue and GraphQL and hosted on AWS.
 
-## Second Edition:
-
 https://snapdragonxc.com
 
 This website was originally built in February 2021 and was updated in March 2024 to replace the Nginx reverse proxy server with a Caddy reverse proxy server.
