@@ -22,8 +22,6 @@ Due to the early version of Vuejs used, the code requires Node 16 LTS or earlier
 
 ## First Edition
 
-https://mark-syd.com/
-
 This app is designed as a personal blog built with Vue and GraphQL and hosted on AWS. The blogs are displayed as a list of short abstracts which can be opened into a full article. The app can create, read, update and delete a blog, when logged in as an administrator.
 
 The client-side code uses Vue Router and Vuex for state management. Apollo Client is used for handling the GraphQL. Search is handled client-side using the library package [Lunr](https://lunrjs.com/). 
